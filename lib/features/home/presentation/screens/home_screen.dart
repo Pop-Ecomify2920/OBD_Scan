@@ -2,9 +2,41 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../shared/widgets/error_boundary.dart';
 import '../../../../shared/widgets/app_background.dart';
+import '../../../../shared/widgets/bottom_navigation_bar.dart';
+import 'package:go_router/go_router.dart';
+import '../../../../core/routes/route_names.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0;
+
+  void _onNavItemTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+    
+    // Navigate based on index
+    switch (index) {
+      case 0:
+        // Already on home
+        break;
+      case 1:
+        // Location/Map screen - navigate if exists
+        break;
+      case 2:
+        // Car/Vehicle screen - navigate if exists
+        break;
+      case 3:
+        context.go(RouteNames.settings);
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +71,10 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                _buildBottomNavigationBar(),
+                AppBottomNavigationBar(
+                  currentIndex: _currentIndex,
+                  onTap: _onNavItemTapped,
+                ),
               ],
             ),
           ),
@@ -390,82 +425,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar() {
-    return Container(
-      height: 95.0,
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(0, 0, 0, 1.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.5),
-            blurRadius: 15.0,
-            offset: Offset(0, -5),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-            Image.asset(
-              "assets/images/home.png",
-              width: 40.0,
-              height: 40.0,
-              fit: BoxFit.contain,
-              // color: Colors.white,
-            ),
-           Image.asset(
-              "assets/images/safety.png",
-              width: 40.0,
-              height: 40.0,
-              fit: BoxFit.contain,
-              // color: Colors.white,
-            ),
-          Image.asset(
-              "assets/images/icon-stations.png",
-              width: 40.0,
-              height: 40.0,
-              fit: BoxFit.contain,
-              // color: Colors.white,
-            ),
-          Image.asset(
-              "assets/images/ant-design_setting-outlined.png",
-              width: 40.0,
-              height: 40.0,
-              fit: BoxFit.contain,
-              // color: Colors.white,
-            ),
-        ],
-      ),
-    );
-  }
-
-  Widget buildNavItem(IconData icon, bool isSelected) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(
-            icon,
-            color:
-                isSelected ? Color.fromRGBO(33, 150, 243, 1.0) : Colors.white70,
-            size: 24.0,
-          ),
-          if (isSelected)
-            Container(
-              margin: EdgeInsets.only(top: 4.0),
-              width: 30.0,
-              height: 3.0,
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(33, 150, 243, 1.0),
-                borderRadius: BorderRadius.circular(2.0),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
 }
 
 class BluetoothButtonPainter extends CustomPainter {
