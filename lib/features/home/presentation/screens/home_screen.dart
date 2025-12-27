@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: screenHeight * 0.85,
                         child: Stack(
                           children: [
-                            _buildBluetoothIcon(screenWidth),
+                            _buildBluetoothIcon(context, screenWidth),
                             _buildTitleDescription(screenWidth),
                             _buildNotificationIcon(screenWidth),
                             _buildGradientEllipse(screenWidth),
@@ -83,14 +83,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildBluetoothIcon(double screenWidth) {
+  Widget _buildBluetoothIcon(BuildContext context, double screenWidth) {
     return Positioned(
       left: -5.0,
-      top: -5.0,
+      top: 9.0,
       child: ErrorBoundary(
         child: GestureDetector(
           onTap: () {
-            // Handle Bluetooth button tap
+            // Navigate to Bluetooth connect screen
+            context.go(RouteNames.bluetoothConnect);
           },
           child: SizedBox(
             width: 130.0,
@@ -122,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   fontWeight: FontWeight.w700,
                   color: Color.fromRGBO(255, 255, 255, 1.0),
                   decoration: TextDecoration.none,
-                  fontSize: 20.0,
+                  fontSize: 21.0,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -148,14 +149,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildNotificationIcon(double screenWidth) {
     return Positioned(
-      right: 20.0,
-      top: 42.0,
+      right: 28.0,
+      top: 47.0,
       child: ErrorBoundary(
-        child: Image.asset(
-          "assets/images/alert.png",
-          width: 20.0,
-          height: 20.0,
-          fit: BoxFit.contain,
+        child: GestureDetector(
+          onTap: () {
+            // Handle notification button tap
+          },
+          child: CustomPaint(
+            size: Size(32.0, 32.0),
+            painter: NotificationIconPainter(),
+          ),
         ),
       ),
     );
@@ -1076,6 +1080,49 @@ class RangeIconPainter extends CustomPainter {
 
     // Scale path from 30x30 SVG to actual size
     final scale = size.width / 30.0;
+    canvas.save();
+    canvas.scale(scale);
+    canvas.drawPath(path, paint);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+// Notification Icon Painter - Bell icon from SVG
+class NotificationIconPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.white
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.5
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+
+    final path = Path();
+    // Notification bell icon path from SVG
+    path.moveTo(18.1337, 26.6667);
+    path.lineTo(13.867, 26.6667);
+    path.moveTo(22.667, 13.3333);
+    path.cubicTo(22.667, 9.65199, 19.6817, 6.66666, 16.0003, 6.66666);
+    path.cubicTo(12.319, 6.66666, 9.33366, 9.65199, 9.33366, 13.3333);
+    path.lineTo(9.33366, 16.672);
+    path.cubicTo(9.33366, 17.104, 9.08966, 17.4973, 8.70433, 17.6907);
+    path.lineTo(8.03366, 18.0253);
+    path.cubicTo(7.19633, 18.4453, 6.66699, 19.3013, 6.66699, 20.2373);
+    path.cubicTo(6.66699, 21.6027, 7.77366, 22.7093, 9.13899, 22.7093);
+    path.lineTo(22.8617, 22.7093);
+    path.cubicTo(24.227, 22.7093, 25.3337, 21.6027, 25.3337, 20.2373);
+    path.cubicTo(25.3337, 19.3013, 24.8043, 18.4453, 23.967, 18.0267);
+    path.lineTo(23.2963, 17.692);
+    path.cubicTo(22.911, 17.4973, 22.667, 17.104, 22.667, 16.672);
+    path.lineTo(22.667, 13.3333);
+    path.close();
+
+    // Scale path from 32x32 SVG to actual size
+    final scale = size.width / 32.0;
     canvas.save();
     canvas.scale(scale);
     canvas.drawPath(path, paint);
