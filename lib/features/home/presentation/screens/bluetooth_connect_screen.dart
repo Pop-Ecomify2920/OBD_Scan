@@ -48,21 +48,21 @@ class BluetoothConnectScreen extends StatelessWidget {
   Widget _buildHeader(double screenWidth) {
     return Positioned(
       left: 0.0,
-      top: 26.0,
+      top: 18.0,
       right: 0.0,
       child: ErrorBoundary(
         child: SizedBox(
           width: screenWidth,
-          height: 100.0,
+          height: 70.0,
           child: Stack(
             children: [
               // Bluetooth icon (left)
               Positioned(
-                left: 3.7,
-                top: -20.0,
+                left: 5,
+                top: -10,
                 child: SizedBox(
-                  width: 125.0,
-                  height: 125.0,
+                  width: 120.0,
+                  height: 120.0,
                   child: CustomPaint(
                     painter: HeaderBluetoothIconPainter(),
                   ),
@@ -72,7 +72,7 @@ class BluetoothConnectScreen extends StatelessWidget {
               Positioned(
                 left: 0.0,
                 right: 0.0,
-                top: 0.0,
+                top: 14.0,
                 child: Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -104,8 +104,8 @@ class BluetoothConnectScreen extends StatelessWidget {
               ),
               // Notification icon (right)
               Positioned(
-                right: 28.0,
-                top: 23.0,
+                right: 20.0,
+                top: 30.0,
                 child: SizedBox(
                   width: 32.0,
                   height: 32.0,
@@ -124,7 +124,7 @@ class BluetoothConnectScreen extends StatelessWidget {
   Widget _buildLargeBluetoothIcon(double screenWidth, double screenHeight) {
     return Positioned(
       left: 20.0,
-      top: 128.0,
+      top: 178.0,
       child: ErrorBoundary(
         child: SizedBox(
           width: 380.0,
@@ -140,7 +140,7 @@ class BluetoothConnectScreen extends StatelessWidget {
   Widget _buildInstructionsText(double screenWidth, double screenHeight) {
     return Positioned(
       left: 20.0,
-      top: 543.0,
+      top: 593.0,
       child: ErrorBoundary(
         child: SizedBox(
           width: screenWidth - 40.0,
@@ -162,7 +162,7 @@ class BluetoothConnectScreen extends StatelessWidget {
   Widget _buildConnectButton(BuildContext context, double screenWidth, double screenHeight) {
     return Positioned(
       left: 20.0,
-      top: 625.0,
+      top: 678.0,
       child: ErrorBoundary(
         child: GestureDetector(
           onTap: () {
@@ -196,7 +196,7 @@ class BluetoothConnectScreen extends StatelessWidget {
   Widget _buildStartWithoutBluetoothLink(BuildContext context, double screenWidth, double screenHeight) {
     return Positioned(
       left: 20.0,
-      top: 705.0,
+      top: 758.0,
       child: ErrorBoundary(
         child: GestureDetector(
           onTap: () {

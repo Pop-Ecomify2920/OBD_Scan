@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 "Parked",
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w400,
-                  fontSize: 15.0,
+                  fontSize: 16.0,
                   color: Color.fromRGBO(214, 214, 214, 1.0),
                   decoration: TextDecoration.none,
                 ),
@@ -149,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildNotificationIcon(double screenWidth) {
     return Positioned(
-      right: 28.0,
+      right: 20.0,
       top: 47.0,
       child: ErrorBoundary(
         child: GestureDetector(
