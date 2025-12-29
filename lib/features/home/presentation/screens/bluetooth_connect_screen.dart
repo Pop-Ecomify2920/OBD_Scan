@@ -21,7 +21,7 @@ class BluetoothConnectScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: SizedBox(
                 width: screenWidth,
-                height: 870,
+                height: screenHeight,
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [
@@ -48,21 +48,21 @@ class BluetoothConnectScreen extends StatelessWidget {
   Widget _buildHeader(double screenWidth) {
     return Positioned(
       left: 0.0,
-      top: 18.0,
+      top: 2.5,
       right: 0.0,
       child: ErrorBoundary(
         child: SizedBox(
           width: screenWidth,
-          height: 70.0,
+          height: 130.0,
           child: Stack(
             children: [
               // Bluetooth icon (left)
               Positioned(
-                left: 5,
-                top: -10,
+                left: 1.5,
+                top: 2.5,
                 child: SizedBox(
-                  width: 120.0,
-                  height: 120.0,
+                  width: 125.0,
+                  height: 125.0,
                   child: CustomPaint(
                     painter: HeaderBluetoothIconPainter(),
                   ),
@@ -72,7 +72,7 @@ class BluetoothConnectScreen extends StatelessWidget {
               Positioned(
                 left: 0.0,
                 right: 0.0,
-                top: 14.0,
+                top: 27.0,
                 child: Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -105,7 +105,7 @@ class BluetoothConnectScreen extends StatelessWidget {
               // Notification icon (right)
               Positioned(
                 right: 20.0,
-                top: 30.0,
+                top: 47.0,
                 child: SizedBox(
                   width: 32.0,
                   height: 32.0,

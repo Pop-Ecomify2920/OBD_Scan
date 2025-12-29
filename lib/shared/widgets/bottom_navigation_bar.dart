@@ -17,13 +17,13 @@ class AppBottomNavigationBar extends StatelessWidget {
       height: 95.0,
       decoration: BoxDecoration(
         color: Color.fromRGBO(0, 0, 0, 1.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.5),
-            blurRadius: 15.0,
-            offset: Offset(0, -5),
-          ),
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.black.withOpacity(0.5),
+        //     blurRadius: 15.0,
+        //     offset: Offset(0, -5),
+        //   ),
+        // ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

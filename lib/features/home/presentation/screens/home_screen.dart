@@ -134,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 "Parked",
                 style: GoogleFonts.inter(
                   fontWeight: FontWeight.w400,
-                  fontSize: 16.0,
+                  fontSize: 15.0,
                   color: Color.fromRGBO(214, 214, 214, 1.0),
                   decoration: TextDecoration.none,
                 ),
@@ -274,7 +274,8 @@ class _HomeScreenState extends State<HomeScreen> {
       child: ErrorBoundary(
         child: GestureDetector(
           onTap: () {
-            // Handle power button tap
+            // Navigate to climate control screen
+            context.go(RouteNames.climateControl);
           },
           child: SizedBox(
             width: 191.0,
