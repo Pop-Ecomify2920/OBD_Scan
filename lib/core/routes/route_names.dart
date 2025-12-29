@@ -7,6 +7,7 @@ class RouteNames {
   static const String recoverAccount = '/recover-account';
   static const String verification = '/verification';
   static const String home = '/home';
+  static const String homeDashboard = '/home-dashboard';
   static const String bluetoothConnect = '/bluetooth-connect';
   static const String climateControl = '/climate-control';
   static const String vehicleStatus = '/vehicle-status';

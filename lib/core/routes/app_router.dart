@@ -7,6 +7,7 @@ import '../../features/auth/presentation/screens/recover_account_screen.dart';
 import '../../features/auth/presentation/screens/verification_screen.dart';
 import '../../features/splash/presentation/screens/splash_screen.dart';
 import '../../features/home/presentation/screens/home_screen.dart';
+import '../../features/home/presentation/screens/home_dashboard_screen.dart';
 import '../../features/home/presentation/screens/bluetooth_connect_screen.dart';
 import '../../features/home/presentation/screens/climate_control_screen.dart';
 import '../../features/home/presentation/screens/vehicle_status_screen.dart';
@@ -22,6 +23,7 @@ class AppRouter {
   static const String recoverAccount = '/recover-account';
   static const String verification = '/verification';
   static const String home = '/home';
+  static const String homeDashboard = '/home-dashboard';
   static const String bluetoothConnect = '/bluetooth-connect';
   static const String climateControl = '/climate-control';
   static const String vehicleStatus = '/vehicle-status';
@@ -86,6 +88,11 @@ class AppRouter {
         path: home,
         name: 'home',
         builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: homeDashboard,
+        name: 'home-dashboard',
+        builder: (context, state) => const HomeDashboardScreen(),
       ),
       GoRoute(
         path: bluetoothConnect,

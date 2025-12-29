@@ -24,7 +24,8 @@ class _HomeScreenState extends State<HomeScreen> {
     // Navigate based on index
     switch (index) {
       case 0:
-        // Already on home
+        // Navigate to home dashboard
+        context.go(RouteNames.homeDashboard);
         break;
       case 1:
         // Location/Map screen - navigate if exists
@@ -65,6 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             _buildCarImage(screenWidth),
                             _buildPowerButton(screenWidth),
                             _buildStatusIndicators(screenWidth),
+                            // Navigation button to dashboard
+                            _buildDashboardButton(context, screenWidth),
                           ],
                         ),
                       ),
@@ -282,6 +285,34 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 190.0,
             child: CustomPaint(
               painter: PowerButtonPainter(),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDashboardButton(BuildContext context, double screenWidth) {
+    return Positioned(
+      right: 20.0,
+      top: 100.0,
+      child: GestureDetector(
+        onTap: () {
+          context.go(RouteNames.homeDashboard);
+        },
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(19, 166, 222, 1.0), // #13a6de
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          child: Text(
+            "Dashboard",
+            style: GoogleFonts.inter(
+              fontSize: 14.0,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+              decoration: TextDecoration.none,
             ),
           ),
         ),
