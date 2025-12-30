@@ -21,15 +21,19 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
       _currentIndex = index;
     });
 
+    // Navigate based on index
     switch (index) {
       case 0:
-        // Already on home dashboard
+        // Navigate to home dashboard
+        context.go(RouteNames.home);
         break;
       case 1:
-        // Location/Map screen
+        // Location/Map screen - navigate if exists
+        context.go(RouteNames.safety);
         break;
       case 2:
-        // Car/Vehicle screen
+        // Car/Vehicle screen - navigate if exists
+        context.go(RouteNames.homeDashboard);
         break;
       case 3:
         context.go(RouteNames.settings);
@@ -45,6 +49,7 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
       body: ErrorBoundary(
         child: AppBackground(
           child: SafeArea(
+            bottom: false,
             child: Column(
               children: [
                 Expanded(
@@ -175,7 +180,8 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
             // Aura image - using contain to show full image including shadow
             SizedBox(
               width: 283.0,
-              height: 120.0, // Increased height to show full image including shadow
+              height:
+                  120.0, // Increased height to show full image including shadow
               child: Image.asset(
                 'assets/images/aura2-3.png',
                 width: 263.0,
@@ -609,7 +615,7 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
           height: 224.0,
           padding: EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 40.0),
           decoration: BoxDecoration(
-          color: Color.fromRGBO(22, 22, 22, 0.685), // #242424
+            color: Color.fromRGBO(22, 22, 22, 0.685), // #242424
             borderRadius: BorderRadius.circular(10.0),
             boxShadow: [
               BoxShadow(
@@ -718,7 +724,6 @@ class NotificationIconPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
-
 
 class LocationMapPainter extends CustomPainter {
   @override

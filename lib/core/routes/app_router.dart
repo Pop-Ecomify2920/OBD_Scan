@@ -10,7 +10,7 @@ import '../../features/home/presentation/screens/home_screen.dart';
 import '../../features/home/presentation/screens/home_dashboard_screen.dart';
 import '../../features/home/presentation/screens/bluetooth_connect_screen.dart';
 import '../../features/home/presentation/screens/climate_control_screen.dart';
-import '../../features/home/presentation/screens/vehicle_status_screen.dart';
+// import '../../features/home/presentation/screens/vehicle_status_screen.dart';
 import '../../features/home/presentation/screens/safety_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
 
@@ -104,11 +104,11 @@ class AppRouter {
         name: 'climate-control',
         builder: (context, state) => const ClimateControlScreen(),
       ),
-      GoRoute(
-        path: vehicleStatus,
-        name: 'vehicle-status',
-        builder: (context, state) => const VehicleStatusScreen(),
-      ),
+      // GoRoute(
+      //   path: vehicleStatus,
+      //   name: 'vehicle-status',
+      //   builder: (context, state) => const VehicleStatusScreen(),
+      // ),
       GoRoute(
         path: safety,
         name: 'safety',

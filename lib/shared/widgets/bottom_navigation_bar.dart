@@ -13,39 +13,43 @@ class AppBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 95.0,
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(0, 0, 0, 1.0),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.black.withOpacity(0.5),
-        //     blurRadius: 15.0,
-        //     offset: Offset(0, -5),
-        //   ),
-        // ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          _buildNavItem(
-            index: 0,
-            icon: _HomeIcon(isSelected: currentIndex == 0),
-          ),
-          _buildNavItem(
-            index: 1,
-            icon: _LocationIcon(isSelected: currentIndex == 1),
-          ),
-          _buildNavItem(
-            index: 2,
-            icon: _CarIcon(isSelected: currentIndex == 2),
-          ),
-          _buildNavItem(
-            index: 3,
-            icon: _SettingsIcon(isSelected: currentIndex == 3),
-          ),
-        ],
+    return SafeArea(
+      top: false,
+      bottom: false,
+      child: Container(
+        height: 95.0,
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(0, 0, 0, 1.0),
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.black.withOpacity(0.5),
+          //     blurRadius: 15.0,
+          //     offset: Offset(0, -5),
+          //   ),
+          // ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            _buildNavItem(
+              index: 0,
+              icon: _HomeIcon(isSelected: currentIndex == 0),
+            ),
+            _buildNavItem(
+              index: 1,
+              icon: _LocationIcon(isSelected: currentIndex == 1),
+            ),
+            _buildNavItem(
+              index: 2,
+              icon: _CarIcon(isSelected: currentIndex == 2),
+            ),
+            _buildNavItem(
+              index: 3,
+              icon: _SettingsIcon(isSelected: currentIndex == 3),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -53,7 +57,7 @@ class AppBottomNavigationBar extends StatelessWidget {
   Widget _buildNavItem({required int index, required Widget icon}) {
     return GestureDetector(
       onTap: () => onTap(index),
-      child: Container(
+      child: SizedBox(
         width: 40.0,
         height: 40.0,
         child: icon,
@@ -165,9 +169,9 @@ class LocationIconPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = isSelected ? 3.0 : 1.5
+      ..color = isSelected ? Color(0xFF2969CD) : Colors.white
+      ..style = isSelected ? PaintingStyle.fill : PaintingStyle.stroke
+      ..strokeWidth = isSelected ? 0 : 1.5
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
@@ -237,9 +241,9 @@ class CarIconPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = isSelected ? 3.0 : 2.0
+      ..color = isSelected ? Color(0xFF2969CD) : Colors.white
+      ..style = isSelected ? PaintingStyle.fill : PaintingStyle.stroke
+      ..strokeWidth = isSelected ? 0 : 2.0
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
@@ -324,7 +328,7 @@ class SettingsIconPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Colors.white
+      ..color = isSelected ? Color(0xFF2969CD) : Colors.white
       ..style = PaintingStyle.fill;
 
     // Settings gear icon path from SVG

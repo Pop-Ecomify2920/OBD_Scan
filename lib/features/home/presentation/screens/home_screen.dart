@@ -20,18 +20,20 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _currentIndex = index;
     });
-    
+
     // Navigate based on index
     switch (index) {
       case 0:
         // Navigate to home dashboard
-        context.go(RouteNames.homeDashboard);
+        context.go(RouteNames.home);
         break;
       case 1:
         // Location/Map screen - navigate if exists
+        context.go(RouteNames.safety);
         break;
       case 2:
         // Car/Vehicle screen - navigate if exists
+        context.go(RouteNames.homeDashboard);
         break;
       case 3:
         context.go(RouteNames.settings);
@@ -48,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: ErrorBoundary(
         child: AppBackground(
           child: SafeArea(
+            bottom: false,
             child: Column(
               children: [
                 Expanded(
@@ -67,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             _buildPowerButton(screenWidth),
                             _buildStatusIndicators(screenWidth),
                             // Navigation button to dashboard
-                            _buildDashboardButton(context, screenWidth),
+                            // _buildDashboardButton(context, screenWidth),
                           ],
                         ),
                       ),
@@ -80,9 +83,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-                            ),
-                          ),
-                        ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -90,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Positioned(
       left: -5.0,
       top: 9.0,
-                        child: ErrorBoundary(
+      child: ErrorBoundary(
         child: GestureDetector(
           onTap: () {
             // Navigate to Bluetooth connect screen
@@ -113,40 +116,40 @@ class _HomeScreenState extends State<HomeScreen> {
       top: 30.0,
       left: 0.0,
       right: 0.0,
-                            child: ErrorBoundary(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    ErrorBoundary(
-                                          child: Text(
-                                            "Mitsubishi X2",
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w700,
+      child: ErrorBoundary(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ErrorBoundary(
+              child: Text(
+                "Mitsubishi X2",
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.w700,
                   color: Color.fromRGBO(255, 255, 255, 1.0),
-                                              decoration: TextDecoration.none,
+                  decoration: TextDecoration.none,
                   fontSize: 21.0,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                    SizedBox(height: 8.0),
-                                    ErrorBoundary(
-                                          child: Text(
-                                            "Parked",
-                                            style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 15.0,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            SizedBox(height: 8.0),
+            ErrorBoundary(
+              child: Text(
+                "Parked",
+                style: GoogleFonts.inter(
+                  fontWeight: FontWeight.w400,
+                  fontSize: 15.0,
                   color: Color.fromRGBO(214, 214, 214, 1.0),
-                                              decoration: TextDecoration.none,
-                                            ),
-                                            textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                  decoration: TextDecoration.none,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -162,17 +165,17 @@ class _HomeScreenState extends State<HomeScreen> {
           child: CustomPaint(
             size: Size(32.0, 32.0),
             painter: NotificationIconPainter(),
-                            ),
-                          ),
-                        ),
+          ),
+        ),
+      ),
     );
   }
 
   Widget _buildGradientEllipse(double screenWidth) {
     return Positioned(
       left: screenWidth / 2 - 259.5,
-      bottom: - 270.0,
-                        child: ErrorBoundary(
+      bottom: -270.0,
+      child: ErrorBoundary(
         child: SizedBox(
           width: 519.0,
           height: 543.0,
@@ -191,11 +194,11 @@ class _HomeScreenState extends State<HomeScreen> {
     return Positioned(
       // left: centerX - 160.0,
       // top: centerY - 190.0,
-                        child: ErrorBoundary(
+      child: ErrorBoundary(
         child: Stack(
-                                  children: [
+          children: [
             // Outer circle
-                                              Positioned(
+            Positioned(
                 left: 76.0,
                 top: 165.0,
                 child: Container(
@@ -210,10 +213,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 )),
             // Middle circle
-                                              Positioned(
+            Positioned(
               left: 50.0,
               top: 139,
-                                                  child: Container(
+              child: Container(
                 width: 310.0,
                 height: 310.0,
                 decoration: BoxDecoration(
@@ -221,15 +224,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   border: Border.all(
                     color: Color.fromRGBO(33, 150, 243, 0.4),
                     width: 2.0,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            ),
+                  ),
+                ),
+              ),
+            ),
             // Inner solid circle
             Positioned(
               left: 103.0,
               top: 195.0,
-                                                              child: Container(
+              child: Container(
                 width: 200.0,
                 height: 200.0,
                 decoration: BoxDecoration(
@@ -242,12 +245,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       spreadRadius: 15.0,
                     ),
                   ],
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -263,10 +266,10 @@ class _HomeScreenState extends State<HomeScreen> {
             image: DecorationImage(
               fit: BoxFit.contain,
               image: AssetImage('assets/images/car.png'),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -285,40 +288,40 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 190.0,
             child: CustomPaint(
               painter: PowerButtonPainter(),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 
-  Widget _buildDashboardButton(BuildContext context, double screenWidth) {
-    return Positioned(
-      right: 20.0,
-      top: 100.0,
-      child: GestureDetector(
-        onTap: () {
-          context.go(RouteNames.homeDashboard);
-        },
-                                                  child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(19, 166, 222, 1.0), // #13a6de
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-                                                                  child: Text(
-            "Dashboard",
-                                                                    style: GoogleFonts.inter(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-              decoration: TextDecoration.none,
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ),
-    );
-  }
+  // Widget _buildDashboardButton(BuildContext context, double screenWidth) {
+  //   return Positioned(
+  //     right: 20.0,
+  //     top: 100.0,
+  //     child: GestureDetector(
+  //       onTap: () {
+  //         context.go(RouteNames.homeDashboard);
+  //       },
+  //       child: Container(
+  //         padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+  //         decoration: BoxDecoration(
+  //           color: Color.fromRGBO(19, 166, 222, 1.0), // #13a6de
+  //           borderRadius: BorderRadius.circular(8.0),
+  //         ),
+  //         child: Text(
+  //           "Dashboard",
+  //           style: GoogleFonts.inter(
+  //             fontSize: 14.0,
+  //             fontWeight: FontWeight.w500,
+  //             color: Colors.white,
+  //             decoration: TextDecoration.none,
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildStatusIndicators(double screenWidth) {
     return Positioned(
@@ -334,10 +337,10 @@ class _HomeScreenState extends State<HomeScreen> {
               _buildBatteryIndicator(),
               _buildTemperatureIndicator(),
               _buildRangeIndicator(),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -371,10 +374,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w600,
                     color: Color.fromRGBO(255, 255, 255, 1.0),
                     decoration: TextDecoration.none,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
@@ -384,8 +387,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildTemperatureIndicator() {
     return ErrorBoundary(
       child: SizedBox(
-                                                    width: 100.0,
-                                                    height: 100.0,
+        width: 100.0,
+        height: 100.0,
         child: Stack(
           alignment: Alignment.center,
           children: [
@@ -398,7 +401,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
-                                                          children: [
+              children: [
                 CustomPaint(
                   size: Size(30.0, 30.0),
                   painter: ThermometerIconPainter(),
@@ -406,18 +409,18 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(height: 4.0),
                 Text(
                   "25",
-                                                                    style: GoogleFonts.inter(
+                  style: GoogleFonts.inter(
                     fontSize: 14.0,
                     fontWeight: FontWeight.w600,
                     color: Color.fromRGBO(255, 255, 255, 1.0),
                     decoration: TextDecoration.none,
-                                                              ),
-                                                            ),
-                                                          ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -451,16 +454,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.w600,
                     color: Color.fromRGBO(255, 255, 255, 1.0),
                     decoration: TextDecoration.none,
-                                      ),
-                                    ),
-                                  ],
-                      ),
-                    ],
                   ),
                 ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
-
 }
 
 class BluetoothButtonPainter extends CustomPainter {
@@ -749,9 +751,10 @@ class GradientEllipsePainter extends CustomPainter {
       end: Alignment.bottomCenter,
       colors: [
         const Color.fromARGB(186, 8, 8, 8).withOpacity(0.73), // Darker at top
-        const Color.fromARGB(255, 22, 21, 21).withOpacity(0.3), // Lighter/transparent at bottom
+        const Color.fromARGB(255, 22, 21, 21)
+            .withOpacity(0.3), // Lighter/transparent at bottom
       ],
-      stops: [0.0,2.0], // Full fade from top to bottom
+      stops: [0.0, 2.0], // Full fade from top to bottom
     );
 
     final paint = Paint()
@@ -776,7 +779,7 @@ class GradientEllipsePainter extends CustomPainter {
 //     final radius = (size.width / 2) - (strokeWidth / 2);
 
 //     // Gradient: #85FF83 (transparent) → #FFE483 (yellow)
-    // Direction: top to bottom (x1="50" y1="-20" x2="50" y2="100")
+// Direction: top to bottom (x1="50" y1="-20" x2="50" y2="100")
 //     final gradient = LinearGradient(
 //       begin: Alignment.topCenter,
 //       end: Alignment.bottomCenter,
@@ -800,8 +803,6 @@ class GradientEllipsePainter extends CustomPainter {
 //   @override
 //   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 // }
-
-
 
 // Temperature Ring Painter - Light Blue gradient (diagonal)
 class BatteryRingPainter extends CustomPainter {
@@ -837,7 +838,6 @@ class BatteryRingPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
-
 
 // Temperature Ring Painter - Light Blue gradient (diagonal)
 class TemperatureRingPainter extends CustomPainter {

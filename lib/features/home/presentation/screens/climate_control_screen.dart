@@ -30,7 +30,7 @@ class _ClimateControlScreenState extends State<ClimateControlScreen> {
         context.go(RouteNames.safety);
         break;
       case 2:
-        context.go(RouteNames.vehicleStatus);
+        context.go(RouteNames.homeDashboard);
         break;
       case 3:
         context.go(RouteNames.settings);
@@ -47,6 +47,7 @@ class _ClimateControlScreenState extends State<ClimateControlScreen> {
       body: ErrorBoundary(
         child: AppBackground(
           child: SafeArea(
+            bottom: false,
             child: Column(
               children: [
                 Expanded(
