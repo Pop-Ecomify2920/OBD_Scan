@@ -14,7 +14,23 @@ class HomeDashboardScreen extends StatefulWidget {
 }
 
 class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
-  int _currentIndex = 0;
+  int _currentIndex = 2; // Default to home dashboard index
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Determine current index based on route
+    _currentIndex = _getIndexFromRoute();
+  }
+
+  int _getIndexFromRoute() {
+    final location = GoRouterState.of(context).uri.path;
+    if (location == RouteNames.home) return 0;
+    if (location == RouteNames.safety) return 1;
+    if (location == RouteNames.homeDashboard) return 2;
+    if (location == RouteNames.settings) return 3;
+    return 2; // Default to home dashboard index
+  }
 
   void _onNavItemTapped(int index) {
     setState(() {
@@ -163,17 +179,17 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
   Widget _buildAuraImage(double screenWidth) {
     return Positioned(
       left: (screenWidth - 263.0) / 2.3,
-      top: 123,
+      top: 100,
       child: ErrorBoundary(
         child: Stack(
           clipBehavior: Clip.none,
           children: [
             // Blur effect ellipse
             Positioned(
-              left: 91.69 - (screenWidth - 203.0) / 2,
+              left: 91.69 - (screenWidth - 252.0) / 2,
               top: 101.06,
               child: CustomPaint(
-                size: Size(287.0, 20.0),
+                size: Size(257.0, 19.0),
                 painter: AuraBlurPainter(),
               ),
             ),
@@ -204,7 +220,7 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
   Widget _buildFuelRangeCard(double screenWidth) {
     return Positioned(
       left: 20.0,
-      top: 286.0,
+      top:256.0,
       child: ErrorBoundary(
         child: Container(
           width: 180.0,
@@ -297,7 +313,7 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
   Widget _buildOilRangeCard(double screenWidth) {
     return Positioned(
       left: screenWidth - 202.0, // 227px from left = screenWidth - 183 - 20
-      top: 286.0,
+      top: 256.0,
       child: ErrorBoundary(
         child: Container(
           width: 180.0,
@@ -386,7 +402,7 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
   Widget _buildRemoteControlSection(double screenWidth) {
     return Positioned(
       left: 20.0,
-      top: 530.0,
+      top: 500.0,
       child: ErrorBoundary(
         child: Container(
           width: screenWidth - 40.0,
@@ -466,7 +482,7 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
   Widget _buildTyrePressureSection(double screenWidth) {
     return Positioned(
       left: 20.0,
-      top: 988.0,
+      top: 954.0,
       child: ErrorBoundary(
         child: Container(
           width: screenWidth - 40.0,
@@ -542,7 +558,7 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
   Widget _buildLocationCard(double screenWidth) {
     return Positioned(
       left: 20.0,
-      top: 738.25,
+      top: 707.25,
       child: ErrorBoundary(
         child: Container(
           width: 180.0,
@@ -608,7 +624,7 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
   Widget _buildClimateCard(double screenWidth) {
     return Positioned(
       left: screenWidth - 202.0,
-      top: 739.0,
+      top:707.0,
       child: ErrorBoundary(
         child: Container(
           width: 180.0,
@@ -1370,11 +1386,11 @@ class AuraBlurPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Color.fromRGBO(7, 7, 7, 0.767) // #040404
-      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 3.2);
+      ..color = Color.fromRGBO(4, 4, 4, 1.0) // #040404
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 2.0);
 
     canvas.drawOval(
-      Rect.fromLTWH(10, 2, size.width, size.height),
+      Rect.fromLTWH(0, 0, size.width, size.height),
       paint,
     );
   }

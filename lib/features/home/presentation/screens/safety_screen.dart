@@ -15,7 +15,23 @@ class SafetyScreen extends StatefulWidget {
 }
 
 class _SafetyScreenState extends State<SafetyScreen> {
-  int _currentIndex = 1; // Location/Safety index
+  int _currentIndex = 1; // Default to safety index
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Determine current index based on route
+    _currentIndex = _getIndexFromRoute();
+  }
+
+  int _getIndexFromRoute() {
+    final location = GoRouterState.of(context).uri.path;
+    if (location == RouteNames.home) return 0;
+    if (location == RouteNames.safety) return 1;
+    if (location == RouteNames.homeDashboard) return 2;
+    if (location == RouteNames.settings) return 3;
+    return 1; // Default to safety index
+  }
 
   void _onNavItemTapped(int index) {
     setState(() {
@@ -25,10 +41,11 @@ class _SafetyScreenState extends State<SafetyScreen> {
     // Navigate based on index
     switch (index) {
       case 0:
-        context.go(RouteNames.homeDashboard);
+        context.go(RouteNames.home);
         break;
       case 1:
         // Already on safety
+         context.go(RouteNames.safety);
         break;
       case 2:
         context.go(RouteNames.homeDashboard);
@@ -239,7 +256,7 @@ class _SafetyScreenState extends State<SafetyScreen> {
                   // Background circle with teal fill (centered)
                   Positioned(
                     left: (85.0 - 76.0) / 2,
-                    top: (85.0 - 77.5) / 2,
+                    top: (85.0 - 80.5) / 2,
                     child: SizedBox(
                       width: 70.0,
                       height: 70.0,
@@ -251,7 +268,7 @@ class _SafetyScreenState extends State<SafetyScreen> {
                   // Progress ring (centered with padding for stroke)
                   Positioned(
                     left: (85.0 - 86.0) / 2, // Center 82x82 in 85x85
-                    top: (85.0 - 81) / 2,
+                    top: (85.0 - 85) / 2,
                     child: SizedBox(
                       width: 75.0, // Increased to accommodate full stroke width
                       height: 75.0,

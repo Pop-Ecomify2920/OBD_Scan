@@ -90,38 +90,40 @@ class HomeIconPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = isSelected ? Color(0xFF2969CD) : Colors.white
-      ..style = isSelected ? PaintingStyle.fill : PaintingStyle.stroke
-      ..strokeWidth = isSelected ? 0 : 2.0;
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.5
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
 
     final path = Path();
-    // Home icon path from SVG
+    // Home icon path from SVG (exact path data)
     path.moveTo(36.9728, 19.7266);
-    path.lineTo(21.8791, 4.64063);
-    path.lineTo(20.8673, 3.62891);
-    path.cubicTo(20.6368, 3.39992, 20.3251, 3.27139, 20.0002, 3.27139);
-    path.cubicTo(19.6752, 3.27139, 19.3635, 3.39992, 19.133, 3.62891);
-    path.lineTo(3.02751, 19.7266);
-    path.cubicTo(2.7913, 19.9619, 2.60462, 20.2421, 2.47849, 20.5507);
-    path.cubicTo(2.35236, 20.8593, 2.28933, 21.1901, 2.29313, 21.5234);
-    path.cubicTo(2.30876, 22.8984, 3.45329, 23.9961, 4.82829, 23.9961);
-    path.lineTo(6.48844, 23.9961);
-    path.lineTo(6.48844, 36.7188);
-    path.lineTo(33.5119, 36.7188);
-    path.lineTo(33.5119, 23.9961);
-    path.lineTo(35.2072, 23.9961);
-    path.cubicTo(35.8752, 23.9961, 36.5041, 23.7344, 36.9767, 23.2617);
-    path.cubicTo(37.2095, 23.0297, 37.3939, 22.7539, 37.5192, 22.4501);
-    path.cubicTo(37.6446, 22.1464, 37.7085, 21.8208, 37.7072, 21.4922);
-    path.cubicTo(37.7072, 20.8281, 37.4455, 20.1992, 36.9728, 19.7266);
+    // path.lineTo(21.8791, 4.64063);
+    // path.lineTo(20.8673, 3.62891);
+    // path.cubicTo(20.6368, 3.39992, 20.3251, 3.27139, 20.0002, 3.27139);
+    // path.cubicTo(19.6752, 3.27139, 19.3635, 3.39992, 19.133, 3.62891);
+    // path.lineTo(3.02751, 19.7266);
+    // path.cubicTo(2.7913, 19.9619, 2.60462, 20.2421, 2.47849, 20.5507);
+    // path.cubicTo(2.35236, 20.8593, 2.28933, 21.1901, 2.29313, 21.5234);
+    // path.cubicTo(2.30876, 22.8984, 3.45329, 23.9961, 4.82829, 23.9961);
+    // path.lineTo(6.48844, 23.9961);
+    // path.lineTo(6.48844, 36.7188);
+    // path.lineTo(33.5119, 36.7188);
+    // path.lineTo(33.5119, 23.9961);
+    // path.lineTo(35.2072, 23.9961);
+    // path.cubicTo(35.8752, 23.9961, 36.5041, 23.7344, 36.9767, 23.2617);
+    // path.cubicTo(37.2095, 23.0297, 37.3939, 22.7539, 37.5192, 22.4501);
+    // path.cubicTo(37.6446, 22.1464, 37.7085, 21.8208, 37.7072, 21.4922);
+    // path.cubicTo(37.7072, 20.8281, 37.4455, 20.1992, 36.9728, 19.7266);
+    // path.close();
+    
+    path.moveTo(25.1877, 33.9063);
+    path.lineTo(15.8127, 33.9063);
+    // path.lineTo(17.8127, 25.9375);
+    // path.lineTo(22.1877, 25.9375);
+    // path.lineTo(22.1877, 33.9063);
     path.close();
-
-    path.moveTo(22.1877, 33.9063);
-    path.lineTo(17.8127, 33.9063);
-    path.lineTo(17.8127, 25.9375);
-    path.lineTo(22.1877, 25.9375);
-    path.lineTo(22.1877, 33.9063);
-    path.close();
-
+    
     path.moveTo(30.6994, 21.1836);
     path.lineTo(30.6994, 33.9063);
     path.lineTo(24.6877, 33.9063);
@@ -170,8 +172,8 @@ class LocationIconPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = isSelected ? Color(0xFF2969CD) : Colors.white
-      ..style = isSelected ? PaintingStyle.fill : PaintingStyle.stroke
-      ..strokeWidth = isSelected ? 0 : 1.5
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.5
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
@@ -242,8 +244,8 @@ class CarIconPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = isSelected ? Color(0xFF2969CD) : Colors.white
-      ..style = isSelected ? PaintingStyle.fill : PaintingStyle.stroke
-      ..strokeWidth = isSelected ? 0 : 2.0
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
@@ -329,73 +331,76 @@ class SettingsIconPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = isSelected ? Color(0xFF2969CD) : Colors.white
-      ..style = PaintingStyle.fill;
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.5
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
 
-    // Settings gear icon path from SVG
+    // Settings gear icon path from SVG (exact path data)
     final path = Path();
-    path.moveTo(36.125, 24.4414);
-    path.lineTo(33.5664, 22.2539);
-    path.cubicTo(33.6875, 21.5117, 33.75, 20.7539, 33.75, 19.9961);
-    path.cubicTo(33.75, 19.2383, 33.6875, 18.4805, 33.5664, 17.7383);
-    path.lineTo(36.125, 15.5508);
-    path.cubicTo(36.318, 15.3856, 36.4562, 15.1655, 36.521, 14.9199);
-    path.cubicTo(36.5859, 14.6743, 36.5745, 14.4148, 36.4883, 14.1758);
-    path.lineTo(36.4532, 14.0742);
-    path.cubicTo(35.7488, 12.1056, 34.694, 10.2806, 33.3399, 8.6875);
-    path.lineTo(33.2696, 8.60547);
-    path.cubicTo(33.1053, 8.41231, 32.8864, 8.27346, 32.6416, 8.20722);
-    path.cubicTo(32.3968, 8.14097, 32.1377, 8.15044, 31.8985, 8.23438);
-    path.lineTo(28.7227, 9.36328);
-    path.cubicTo(27.5508, 8.40234, 26.2422, 7.64453, 24.8282, 7.11328);
-    path.lineTo(24.2149, 3.79297);
-    path.cubicTo(24.1686, 3.54313, 24.0474, 3.31329, 23.8674, 3.13398);
-    path.cubicTo(23.6874, 2.95466, 23.4571, 2.83436, 23.2071, 2.78906);
-    path.lineTo(23.1016, 2.76953);
-    path.cubicTo(21.0664, 2.40234, 18.9258, 2.40234, 16.8906, 2.76953);
-    path.lineTo(16.7852, 2.78906);
-    path.cubicTo(16.5352, 2.83436, 16.3049, 2.95466, 16.1248, 3.13398);
-    path.cubicTo(15.9448, 3.31329, 15.8236, 3.54313, 15.7774, 3.79297);
-    path.lineTo(15.1602, 7.12891);
-    path.cubicTo(13.7574, 7.66027, 12.4511, 8.41768, 11.293, 9.37109);
-    path.lineTo(8.09376, 8.23438);
-    path.cubicTo(7.85457, 8.14977, 7.59529, 8.13996, 7.35038, 8.20625);
-    path.cubicTo(7.10548, 8.27253, 6.88654, 8.41178, 6.72267, 8.60547);
-    path.lineTo(6.65236, 8.6875);
-    path.cubicTo(5.2998, 10.2817, 4.24523, 12.1064, 3.53907, 14.0742);
-    path.lineTo(3.50391, 14.1758);
-    path.cubicTo(3.32813, 14.6641, 3.47266, 15.2109, 3.8672, 15.5508);
-    path.lineTo(6.45704, 17.7617);
-    path.cubicTo(6.33595, 18.4961, 6.27735, 19.2461, 6.27735, 19.9922);
-    path.cubicTo(6.27735, 20.7422, 6.33595, 21.4922, 6.45704, 22.2227);
-    path.lineTo(3.8672, 24.4336);
-    path.cubicTo(3.67421, 24.5988, 3.53609, 24.8188, 3.4712, 25.0645);
-    path.cubicTo(3.4063, 25.3101, 3.41771, 25.5696, 3.50391, 25.8086);
-    path.lineTo(3.53907, 25.9102);
-    path.cubicTo(4.2461, 27.8789, 5.29298, 29.6953, 6.65236, 31.2969);
-    path.lineTo(6.72267, 31.3789);
-    path.cubicTo(6.88694, 31.5721, 7.10589, 31.7109, 7.35065, 31.7772);
-    path.cubicTo(7.59541, 31.8434, 7.85449, 31.8339, 8.09376, 31.75);
-    path.lineTo(11.293, 30.6133);
-    path.cubicTo(12.4571, 31.5703, 13.7578, 32.3281, 15.1602, 32.8555);
-    path.lineTo(15.7774, 36.1914);
-    path.cubicTo(15.8236, 36.4412, 15.9448, 36.6711, 16.1248, 36.8504);
-    path.cubicTo(16.3049, 37.0297, 16.5352, 37.15, 16.7852, 37.1953);
-    path.lineTo(16.8906, 37.2148);
-    path.cubicTo(18.9445, 37.584, 21.0477, 37.584, 23.1016, 37.2148);
-    path.lineTo(23.2071, 37.1953);
-    path.cubicTo(23.4571, 37.15, 23.6874, 37.0297, 23.8674, 36.8504);
-    path.cubicTo(24.0474, 36.6711, 24.1686, 36.4412, 24.2149, 36.1914);
-    path.lineTo(24.8282, 32.8711);
-    path.cubicTo(26.2416, 32.3412, 27.5576, 31.581, 28.7227, 30.6211);
-    path.lineTo(31.8985, 31.75);
-    path.cubicTo(32.1377, 31.8346, 32.397, 31.8444, 32.6419, 31.7781);
-    path.cubicTo(32.8868, 31.7118, 33.1057, 31.5726, 33.2696, 31.3789);
-    path.lineTo(33.3399, 31.2969);
-    path.cubicTo(34.6993, 29.6914, 35.7461, 27.8789, 36.4532, 25.9102);
-    path.lineTo(36.4883, 25.8086);
-    path.cubicTo(36.6641, 25.3281, 36.5196, 24.7813, 36.125, 24.4414);
-    path.close();
-
+    // path.moveTo(36.125, 24.4414);
+    // path.lineTo(33.5664, 22.2539);
+    // path.cubicTo(33.6875, 21.5117, 33.75, 20.7539, 33.75, 19.9961);
+    // path.cubicTo(33.75, 19.2383, 33.6875, 18.4805, 33.5664, 17.7383);
+    // path.lineTo(36.125, 15.5508);
+    // path.cubicTo(36.318, 15.3856, 36.4562, 15.1655, 36.521, 14.9199);
+    // path.cubicTo(36.5859, 14.6743, 36.5745, 14.4148, 36.4883, 14.1758);
+    // path.lineTo(36.4532, 14.0742);
+    // path.cubicTo(35.7488, 12.1056, 34.694, 10.2806, 33.3399, 8.6875);
+    // path.lineTo(33.2696, 8.60547);
+    // path.cubicTo(33.1053, 8.41231, 32.8864, 8.27346, 32.6416, 8.20722);
+    // path.cubicTo(32.3968, 8.14097, 32.1377, 8.15044, 31.8985, 8.23438);
+    // path.lineTo(28.7227, 9.36328);
+    // path.cubicTo(27.5508, 8.40234, 26.2422, 7.64453, 24.8282, 7.11328);
+    // path.lineTo(24.2149, 3.79297);
+    // path.cubicTo(24.1686, 3.54313, 24.0474, 3.31329, 23.8674, 3.13398);
+    // path.cubicTo(23.6874, 2.95466, 23.4571, 2.83436, 23.2071, 2.78906);
+    // path.lineTo(23.1016, 2.76953);
+    // path.cubicTo(21.0664, 2.40234, 18.9258, 2.40234, 16.8906, 2.76953);
+    // path.lineTo(16.7852, 2.78906);
+    // path.cubicTo(16.5352, 2.83436, 16.3049, 2.95466, 16.1248, 3.13398);
+    // path.cubicTo(15.9448, 3.31329, 15.8236, 3.54313, 15.7774, 3.79297);
+    // path.lineTo(15.1602, 7.12891);
+    // path.cubicTo(13.7574, 7.66027, 12.4511, 8.41768, 11.293, 9.37109);
+    // path.lineTo(8.09376, 8.23438);
+    // path.cubicTo(7.85457, 8.14977, 7.59529, 8.13996, 7.35038, 8.20625);
+    // path.cubicTo(7.10548, 8.27253, 6.88654, 8.41178, 6.72267, 8.60547);
+    // path.lineTo(6.65236, 8.6875);
+    // path.cubicTo(5.2998, 10.2817, 4.24523, 12.1064, 3.53907, 14.0742);
+    // path.lineTo(3.50391, 14.1758);
+    // path.cubicTo(3.32813, 14.6641, 3.47266, 15.2109, 3.8672, 15.5508);
+    // path.lineTo(6.45704, 17.7617);
+    // path.cubicTo(6.33595, 18.4961, 6.27735, 19.2461, 6.27735, 19.9922);
+    // path.cubicTo(6.27735, 20.7422, 6.33595, 21.4922, 6.45704, 22.2227);
+    // path.lineTo(3.8672, 24.4336);
+    // path.cubicTo(3.67421, 24.5988, 3.53609, 24.8188, 3.4712, 25.0645);
+    // path.cubicTo(3.4063, 25.3101, 3.41771, 25.5696, 3.50391, 25.8086);
+    // path.lineTo(3.53907, 25.9102);
+    // path.cubicTo(4.2461, 27.8789, 5.29298, 29.6953, 6.65236, 31.2969);
+    // path.lineTo(6.72267, 31.3789);
+    // path.cubicTo(6.88694, 31.5721, 7.10589, 31.7109, 7.35065, 31.7772);
+    // path.cubicTo(7.59541, 31.8434, 7.85449, 31.8339, 8.09376, 31.75);
+    // path.lineTo(11.293, 30.6133);
+    // path.cubicTo(12.4571, 31.5703, 13.7578, 32.3281, 15.1602, 32.8555);
+    // path.lineTo(15.7774, 36.1914);
+    // path.cubicTo(15.8236, 36.4412, 15.9448, 36.6711, 16.1248, 36.8504);
+    // path.cubicTo(16.3049, 37.0297, 16.5352, 37.15, 16.7852, 37.1953);
+    // path.lineTo(16.8906, 37.2148);
+    // path.cubicTo(18.9445, 37.584, 21.0477, 37.584, 23.1016, 37.2148);
+    // path.lineTo(23.2071, 37.1953);
+    // path.cubicTo(23.4571, 37.15, 23.6874, 37.0297, 23.8674, 36.8504);
+    // path.cubicTo(24.0474, 36.6711, 24.1686, 36.4412, 24.2149, 36.1914);
+    // path.lineTo(24.8282, 32.8711);
+    // path.cubicTo(26.2416, 32.3412, 27.5576, 31.581, 28.7227, 30.6211);
+    // path.lineTo(31.8985, 31.75);
+    // path.cubicTo(32.1377, 31.8346, 32.397, 31.8444, 32.6419, 31.7781);
+    // path.cubicTo(32.8868, 31.7118, 33.1057, 31.5726, 33.2696, 31.3789);
+    // path.lineTo(33.3399, 31.2969);
+    // path.cubicTo(34.6993, 29.6914, 35.7461, 27.8789, 36.4532, 25.9102);
+    // path.lineTo(36.4883, 25.8086);
+    // path.cubicTo(36.6641, 25.3281, 36.5196, 24.7813, 36.125, 24.4414);
+    // path.close();
+    
     // Inner circle
     path.moveTo(30.793, 18.1992);
     path.cubicTo(30.8907, 18.7891, 30.9414, 19.3945, 30.9414, 20);
@@ -437,14 +442,14 @@ class SettingsIconPainter extends CustomPainter {
     path.lineTo(30.5391, 16.6406);
     path.lineTo(30.793, 18.1992);
     path.close();
-
-    path.moveTo(20, 12.7344);
-    path.cubicTo(16.2031, 12.7344, 13.125, 15.8125, 13.125, 19.6094);
-    path.cubicTo(13.125, 23.4063, 16.2031, 26.4844, 20, 26.4844);
-    path.cubicTo(23.7969, 26.4844, 26.875, 23.4063, 26.875, 19.6094);
-    path.cubicTo(26.875, 15.8125, 23.7969, 12.7344, 20, 12.7344);
-    path.close();
-
+    
+    // path.moveTo(20, 12.7344);
+    // path.cubicTo(16.2031, 12.7344, 13.125, 15.8125, 13.125, 19.6094);
+    // path.cubicTo(13.125, 23.4063, 16.2031, 26.4844, 20, 26.4844);
+    // path.cubicTo(23.7969, 26.4844, 26.875, 23.4063, 26.875, 19.6094);
+    // path.cubicTo(26.875, 15.8125, 23.7969, 12.7344, 20, 12.7344);
+    // path.close();
+    
     path.moveTo(23.0938, 22.7031);
     path.cubicTo(22.688, 23.1101, 22.2058, 23.4328, 21.6748, 23.6526);
     path.cubicTo(21.1439, 23.8725, 20.5747, 23.9853, 20, 23.9844);

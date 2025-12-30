@@ -14,7 +14,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _currentIndex = 0;
+  int _currentIndex = 0; // Default to home index
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Determine current index based on route
+    _currentIndex = _getIndexFromRoute();
+  }
+
+  int _getIndexFromRoute() {
+    final location = GoRouterState.of(context).uri.path;
+    if (location == RouteNames.home) return 0;
+    if (location == RouteNames.safety) return 1;
+    if (location == RouteNames.homeDashboard) return 2;
+    if (location == RouteNames.settings) return 3;
+    return 0; // Default to home index
+  }
 
   void _onNavItemTapped(int index) {
     setState(() {

@@ -15,7 +15,23 @@ class ClimateControlScreen extends StatefulWidget {
 }
 
 class _ClimateControlScreenState extends State<ClimateControlScreen> {
-  int _currentIndex = 0; // Home index (climate is part of home)
+  int _currentIndex = 0; // Default to home index
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Determine current index based on route
+    _currentIndex = _getIndexFromRoute();
+  }
+
+  int _getIndexFromRoute() {
+    final location = GoRouterState.of(context).uri.path;
+    if (location == RouteNames.home) return 0;
+    if (location == RouteNames.safety) return 1;
+    if (location == RouteNames.homeDashboard) return 2;
+    if (location == RouteNames.settings) return 3;
+    return 0; // Default to home index (climate is part of home)
+  }
 
   void _onNavItemTapped(int index) {
     setState(() {

@@ -15,17 +15,33 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  int _currentIndex = 3; // Settings index
+  int _currentIndex = 3; // Default to settings index
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Determine current index based on route
+    _currentIndex = _getIndexFromRoute();
+  }
+
+  int _getIndexFromRoute() {
+    final location = GoRouterState.of(context).uri.path;
+    if (location == RouteNames.home) return 0;
+    if (location == RouteNames.safety) return 1;
+    if (location == RouteNames.homeDashboard) return 2;
+    if (location == RouteNames.settings) return 3;
+    return 3; // Default to settings index
+  }
 
   void _onNavItemTapped(int index) {
     setState(() {
       _currentIndex = index;
     });
-    
+
     // Navigate based on index
     switch (index) {
       case 0:
-        context.go(RouteNames.homeDashboard);
+        context.go(RouteNames.home);
         break;
       case 1:
         context.go(RouteNames.safety);
@@ -35,6 +51,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         break;
       case 3:
         // Already on settings
+        context.go(RouteNames.settings);
         break;
     }
   }
@@ -42,7 +59,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       body: ErrorBoundary(
@@ -55,7 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: SingleChildScrollView(
                     child: SizedBox(
                       width: screenWidth,
-                      height: screenHeight * 1.2,
+                      height: 796,
                       child: Stack(
                         clipBehavior: Clip.none,
                         children: [
@@ -140,8 +156,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
       children: [
         // Blur effect ellipse
         Positioned(
-          left: 91.69 - 20.0, // Adjust for padding
-          top: 220.56,
+          left: 91.69 - 15.0, // Adjust for padding
+          top: 185,
           child: CustomPaint(
             size: Size(257.0, 19.0),
             painter: CarBlurPainter(),
@@ -149,12 +165,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
         // Car image
         Positioned(
-          left: (screenWidth - 263.0) / 2,
-          top: 128.5,
+          left: (screenWidth - 281.0) / 2,
+          top: 93.5,
           child: ErrorBoundary(
             child: Image.asset(
               'assets/images/aura2-3.png',
-              width: 263.0,
+              width: 283.0,
               height: 99.35,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
@@ -173,8 +189,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _buildStatCards(double screenWidth) {
     return Positioned(
-      left: 20.0,
-      top: 275.0,
+      left: 11.0,
+      top: 240.0,
       child: Row(
         children: [
           _buildStatCard("AVG. SPEED", "68 kph"),
@@ -190,10 +206,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget _buildStatCard(String label, String value) {
     return Container(
       width: 119.0,
-      height: 54.0,
+      height: 63.0,
       padding: EdgeInsets.symmetric(vertical: 13.0),
       decoration: BoxDecoration(
-        color: Color.fromRGBO(41, 41, 41, 1.0), // #292929
+        color: Color.fromRGBO(83, 82, 82, 0.486), // #292929
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Column(
@@ -204,11 +220,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
             style: GoogleFonts.inter(
               fontSize: 10.0,
               fontWeight: FontWeight.normal,
-              color: Color.fromRGBO(163, 163, 163, 1.0), // neutral-400
+              color: Color.fromRGBO(201, 198, 198, 1), // neutral-400
               decoration: TextDecoration.none,
             ),
           ),
-          SizedBox(height: 11.0),
+          SizedBox(height: 2.0),
           Text(
             value,
             style: GoogleFonts.inter(
@@ -225,8 +241,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget _buildServiceCards(double screenWidth) {
     return Positioned(
-      left: 20.0,
-      top: 354.0,
+      left: 11.0,
+      top: 324.0,
       child: Column(
         children: [
           Row(
@@ -305,7 +321,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     // Using approximate alignments based on HTML angles
     Alignment begin = Alignment.topCenter;
     Alignment end = Alignment.bottomCenter;
-    
+
     // Adjust based on card type for better gradient match
     if (title == "SERVICE") {
       // 198.14deg - slightly angled
@@ -324,11 +340,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
       begin = Alignment(0.12, -1.0);
       end = Alignment(-0.12, 1.0);
     }
-    
+
     return Container(
       width: 183.0,
       height: 187.0,
-      padding: EdgeInsets.all(24.0),
+      padding: EdgeInsets.only(
+        top: 24.0,
+        left: 24.0,
+        right: 24.0,
+        bottom: 8.0, // Reduced bottom padding to make room for arrow button
+      ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         gradient: LinearGradient(
@@ -338,47 +359,63 @@ class _SettingsScreenState extends State<SettingsScreen> {
           stops: gradientStops,
         ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Stack(
+        clipBehavior: Clip.none, // Allow arrow button to extend slightly outside
         children: [
-          Text(
-            title,
-            style: GoogleFonts.inter(
-              fontSize: 14.0,
-              fontWeight: FontWeight.normal,
-              color: Colors.white,
-              decoration: TextDecoration.none,
-            ),
-          ),
-          SizedBox(height: 24.0),
-          // Icon
-          SizedBox(
-            width: 64.0,
-            height: 64.0,
-            child: CustomPaint(
-              painter: iconPainter,
-            ),
-          ),
-          Spacer(),
-          // Arrow button
-          SizedBox(
-            width: 40.0,
-            height: 40.0,
-            child: Stack(
-              children: [
-                // Background circle with blur effect
-                CustomPaint(
-                  size: Size(40.0, 40.0),
-                  painter: ArrowButtonBackgroundPainter(),
-                ),
-                // Arrow icon
-                Center(
-                  child: CustomPaint(
-                    size: Size(24.0, 24.0),
-                    painter: ArrowIconPainter(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              // Title - centered
+              Center(
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.inter(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.normal,
+                    color: Colors.white,
+                    decoration: TextDecoration.none,
                   ),
                 ),
-              ],
+              ),
+              SizedBox(height: 14.0),
+              // Icon - centered
+              Center(
+                child: SizedBox(
+                  width: 64.0,
+                  height: 64.0,
+                  child: CustomPaint(
+                    painter: iconPainter,
+                  ),
+                ),
+              ),
+              Spacer(),
+            ],
+          ),
+          // Arrow button positioned at bottom-right (partially outside for visual effect)
+          Positioned(
+            bottom: 1,
+            right: -13,
+            child: SizedBox(
+              width: 40.0,
+              height: 40.0,
+              child: Stack(
+                children: [
+                  // Background circle with blur effect
+                  CustomPaint(
+                    size: Size(40.0, 40.0),
+                    painter: ArrowButtonBackgroundPainter(),
+                  ),
+                  // Arrow icon (centered)
+                  Center(
+                    child: CustomPaint(
+                      size: Size(30.0, 30.0),
+                      painter: ArrowIconPainter(),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -654,6 +691,7 @@ class ArrowButtonBackgroundPainter extends CustomPainter {
       ..color = Colors.white.withOpacity(0.1)
       ..style = PaintingStyle.fill;
 
+    // Center the circle
     canvas.drawCircle(
       Offset(size.width / 2, size.height / 2),
       size.width / 2,
@@ -670,22 +708,43 @@ class ArrowIconPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = Color.fromRGBO(186, 186, 186, 1.0) // #BABABA
+      ..color = Color.fromRGBO(201, 199, 199, 1) // #BABABA
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.5
+      ..strokeWidth = 2.5
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
-    // Arrow path from SVG
+    // Arrow path from SVG (original coordinates in 40x40 space)
     final path = Path();
     path.moveTo(18.5, 25.1053);
     path.lineTo(24.5, 20.0526);
     path.lineTo(18.5, 15.0);
 
-    // Scale from 40x40 to 24x24
+    // Calculate the bounding box center of the arrow
+    // Min X: 18.5, Max X: 24.5, Min Y: 15.0, Max Y: 25.1053
+    final arrowCenterX = (18.5 + 59.5) / 2; // 21.5
+    final arrowCenterY = (15.0 + 65.1053) / 2; // 20.05265
+    
+    // Original space center is (20, 20)
+    // Offset needed to center the arrow
+    final offsetX = 20.0 - arrowCenterX; // -1.5
+    final offsetY = 20.0 - arrowCenterY; // -0.05265
+    
+    // Scale factor from 40x40 to target size
     final scale = size.width / 40.0;
+    
+    // Target center
+    final targetCenterX = size.width / 2;
+    final targetCenterY = size.height / 2;
+    
     canvas.save();
+    // Translate to target center
+    canvas.translate(targetCenterX, targetCenterY);
+    // Scale
     canvas.scale(scale);
+    // Translate to center the arrow in original space
+    canvas.translate(offsetX, offsetY);
+    // Draw the path
     canvas.drawPath(path, paint);
     canvas.restore();
   }
@@ -693,4 +752,3 @@ class ArrowIconPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
-
