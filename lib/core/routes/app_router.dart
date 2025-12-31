@@ -13,6 +13,7 @@ import '../../features/home/presentation/screens/climate_control_screen.dart';
 // import '../../features/home/presentation/screens/vehicle_status_screen.dart';
 import '../../features/home/presentation/screens/safety_screen.dart';
 import '../../features/settings/presentation/screens/settings_screen.dart';
+import '../../features/home/presentation/screens/car_selection_screen.dart';
 
 class AppRouter {
   static const String splash = '/';
@@ -29,6 +30,7 @@ class AppRouter {
   static const String vehicleStatus = '/vehicle-status';
   static const String safety = '/safety';
   static const String settings = '/settings';
+  static const String carSelection = '/car-selection';
   
   static GoRouter get router => _router;
   
@@ -118,6 +120,11 @@ class AppRouter {
         path: settings,
         name: 'settings',
         builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: carSelection,
+        name: 'car-selection',
+        builder: (context, state) => const CarSelectionScreen(),
       ),
     ],
   );

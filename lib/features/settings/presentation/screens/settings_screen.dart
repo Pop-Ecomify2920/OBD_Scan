@@ -71,7 +71,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: SingleChildScrollView(
                     child: SizedBox(
                       width: screenWidth,
-                      height: 796,
+                      height: 996,
                       child: Stack(
                         clipBehavior: Clip.none,
                         children: [
@@ -243,34 +243,26 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return Positioned(
       left: 11.0,
       top: 324.0,
+      
       child: Column(
+        
         children: [
           Row(
             children: [
               _buildServiceCard(
-                "SERVICE",
-                ServiceIconPainter(),
-                Color.fromRGBO(9, 217, 232, 1.0), // #09D9E8
+                "VEHICLE",
+                VehicleIconPainter(),
+                Color.fromRGBO(19, 166, 222, 1.0), // #13A6DE - Blue theme color
                 [
-                  Color.fromRGBO(255, 255, 255, 0.14),
+                  Color.fromRGBO(107, 106, 106, 0.129),
                   Color.fromRGBO(255, 255, 255, 0),
-                  Color.fromRGBO(9, 217, 232, 0),
-                  Color.fromRGBO(9, 217, 232, 0.2),
-                ],
-                [0.0, 0.38, 0.74, 0.96],
-              ),
-              SizedBox(width: 24.0),
-              _buildServiceCard(
-                "LOG",
-                LogIconPainter(),
-                Color.fromRGBO(235, 1, 206, 1.0), // #EB01CE
-                [
-                  Color.fromRGBO(255, 255, 255, 0.14),
-                  Color.fromRGBO(255, 255, 255, 0),
-                  Color.fromRGBO(235, 1, 206, 0),
-                  Color.fromRGBO(235, 1, 206, 0.2),
+                  Color.fromRGBO(19, 166, 222, 0),
+                  Color.fromRGBO(19, 166, 222, 0.2),
                 ],
                 [0.0, 0.39, 0.74, 0.95],
+                onTap: () {
+                  context.push(RouteNames.carSelection);
+                },
               ),
             ],
           ),
@@ -282,7 +274,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ManualIconPainter(),
                 Color.fromRGBO(5, 202, 173, 1.0), // #05CAAD
                 [
-                  Color.fromRGBO(255, 255, 255, 0.14),
+                  Color.fromRGBO(209, 205, 205, 0.137),
                   Color.fromRGBO(255, 255, 255, 0),
                   Color.fromRGBO(5, 202, 173, 0),
                   Color.fromRGBO(5, 202, 173, 0.2),
@@ -295,12 +287,42 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 SupportIconPainter(),
                 Color.fromRGBO(167, 169, 169, 1.0), // #A7A9A9
                 [
-                  Color.fromRGBO(255, 255, 255, 0.14),
+                  Color.fromRGBO(204, 201, 201, 0.137),
                   Color.fromRGBO(255, 255, 255, 0),
                   Color.fromRGBO(167, 169, 169, 0),
                   Color.fromRGBO(255, 255, 255, 0.2),
                 ],
                 [0.0, 0.41, 0.74, 1.02],
+              ),
+            ],
+          ),
+          SizedBox(height: 20.0),
+          Row(
+            children: [
+              _buildServiceCard(
+                "SERVICE",
+                ServiceIconPainter(),
+                Color.fromRGBO(9, 217, 232, 1.0), // #09D9E8
+                [
+                  Color.fromRGBO(201, 197, 197, 0.137),
+                  Color.fromRGBO(255, 255, 255, 0),
+                  Color.fromRGBO(9, 217, 232, 0),
+                  Color.fromRGBO(9, 217, 232, 0.2),
+                ],
+                [0.0, 0.38, 0.74, 0.96],
+              ),
+              SizedBox(width: 24.0),
+              _buildServiceCard(
+                "LOG",
+                LogIconPainter(),
+                Color.fromRGBO(235, 1, 206, 1.0), // #EB01CE
+                [
+                  Color.fromRGBO(131, 130, 130, 0.133),
+                  Color.fromRGBO(255, 255, 255, 0),
+                  Color.fromRGBO(235, 1, 206, 0),
+                  Color.fromRGBO(235, 1, 206, 0.2),
+                ],
+                [0.0, 0.39, 0.74, 0.95],
               ),
             ],
           ),
@@ -314,8 +336,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
     CustomPainter iconPainter,
     Color iconColor,
     List<Color> gradientColors,
-    List<double> gradientStops,
-  ) {
+    List<double> gradientStops, {
+    VoidCallback? onTap,
+  }) {
     // Convert HTML gradient angles to Flutter Alignment
     // 198.14deg = from top-right to bottom-left
     // Using approximate alignments based on HTML angles
@@ -339,9 +362,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
       // 196.99deg - slightly angled
       begin = Alignment(0.12, -1.0);
       end = Alignment(-0.12, 1.0);
+    } else if (title == "VEHICLE") {
+      // Similar to SERVICE
+      begin = Alignment(0.1, -1.0);
+      end = Alignment(-0.1, 1.0);
     }
 
-    return Container(
+    Widget card = Container(
       width: 183.0,
       height: 187.0,
       padding: EdgeInsets.only(
@@ -360,7 +387,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ),
       ),
       child: Stack(
-        clipBehavior: Clip.none, // Allow arrow button to extend slightly outside
+        clipBehavior:
+            Clip.none, // Allow arrow button to extend slightly outside
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -421,7 +449,55 @@ class _SettingsScreenState extends State<SettingsScreen> {
         ],
       ),
     );
+
+    if (onTap != null) {
+      return GestureDetector(
+        onTap: onTap,
+        child: card,
+      );
+    }
+    return card;
   }
+}
+
+// Vehicle Icon Painter
+class VehicleIconPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Color.fromRGBO(19, 166, 222, 1.0) // #13A6DE - Blue theme color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3.0
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+
+    // Car/vehicle icon path - simplified car outline
+    final path = Path();
+    // Car body (top view)
+    path.moveTo(16.0, 32.0);
+    path.lineTo(20.0, 24.0);
+    path.lineTo(44.0, 24.0);
+    path.lineTo(48.0, 32.0);
+    path.lineTo(48.0, 40.0);
+    path.lineTo(44.0, 44.0);
+    path.lineTo(20.0, 44.0);
+    path.lineTo(16.0, 40.0);
+    path.close();
+
+    // Front wheel
+    path.addOval(Rect.fromCircle(center: Offset(24.0, 40.0), radius: 4.0));
+    // Rear wheel
+    path.addOval(Rect.fromCircle(center: Offset(40.0, 40.0), radius: 4.0));
+
+    final scale = size.width / 57.0;
+    canvas.save();
+    canvas.scale(scale);
+    canvas.drawPath(path, paint);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
 // Car Blur Painter
@@ -724,19 +800,19 @@ class ArrowIconPainter extends CustomPainter {
     // Min X: 18.5, Max X: 24.5, Min Y: 15.0, Max Y: 25.1053
     final arrowCenterX = (18.5 + 59.5) / 2; // 21.5
     final arrowCenterY = (15.0 + 65.1053) / 2; // 20.05265
-    
+
     // Original space center is (20, 20)
     // Offset needed to center the arrow
     final offsetX = 20.0 - arrowCenterX; // -1.5
     final offsetY = 20.0 - arrowCenterY; // -0.05265
-    
+
     // Scale factor from 40x40 to target size
     final scale = size.width / 40.0;
-    
+
     // Target center
     final targetCenterX = size.width / 2;
     final targetCenterY = size.height / 2;
-    
+
     canvas.save();
     // Translate to target center
     canvas.translate(targetCenterX, targetCenterY);

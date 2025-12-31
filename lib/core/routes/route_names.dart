@@ -13,5 +13,6 @@ class RouteNames {
   static const String vehicleStatus = '/vehicle-status';
   static const String safety = '/safety';
   static const String settings = '/settings';
+  static const String carSelection = '/car-selection';
 }
 

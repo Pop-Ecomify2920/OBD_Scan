@@ -428,8 +428,8 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      _buildRemoteControlButton(Icons.lock, () {}),
-                      _buildRemoteControlButton(Icons.ac_unit, () {}),
+                      _buildRemoteControlButtonWithPainter(PowerIconPainter(), () {}),
+                      _buildRemoteControlButtonWithPainter(CarIconPainter(), () {}),
                       _buildRemoteControlButton(Icons.lock_outline, () {}),
                       _buildRemoteControlButton(Icons.volume_up, () {}),
                     ],
@@ -474,6 +474,29 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
           icon,
           color: Color.fromRGBO(186, 186, 186, 1.0), // #BABABA
           size: 24.0,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRemoteControlButtonWithPainter(CustomPainter painter, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 61.0,
+        height: 61.0,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white.withOpacity(0.1),
+        ),
+        child: Center(
+          child: SizedBox(
+            width: 28.0,
+            height: 28.0,
+            child: CustomPaint(
+              painter: painter,
+            ),
+          ),
         ),
       ),
     );
@@ -1522,6 +1545,85 @@ class OilRangeProgressPainter extends CustomPainter {
     );
 
     canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+// Power Icon Painter (based on SVG)
+class PowerIconPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Color.fromRGBO(186, 186, 186, 1.0) // #BABABA
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.5
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+
+    // Scale from 32x32 viewBox to actual size
+    final scale = size.width / 32.0;
+    canvas.save();
+    canvas.scale(scale);
+
+    final path = Path();
+    // Circle path: M21.657 10.343C24.781 13.467 24.781 18.533 21.657 21.657C18.533 24.781 13.467 24.781 10.343 21.657C7.219 18.533 7.219 13.467 10.343 10.343
+    // This is a circle centered at (16, 16) with radius ~5.657
+    path.moveTo(21.657, 10.343);
+    path.cubicTo(24.781, 13.467, 24.781, 18.533, 21.657, 21.657);
+    path.cubicTo(18.533, 24.781, 13.467, 24.781, 10.343, 21.657);
+    path.cubicTo(7.219, 18.533, 7.219, 13.467, 10.343, 10.343);
+    // path.cubicTo(13.467, 7.219, 18.533, 7.219, 21.657, 10.343);
+    
+    // Vertical line: M16 8V16
+    path.moveTo(16.0, 8.0);
+    path.lineTo(16.0, 16.0);
+
+    canvas.drawPath(path, paint);
+    canvas.restore();
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+// Car Icon Painter (simplified car icon for button)
+class CarIconPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Color.fromRGBO(186, 186, 186, 1.0) // #BABABA
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.5
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+
+    // Scale to fit in 24x24 size
+    final scale = size.width / 24.0;
+    canvas.save();
+    canvas.scale(scale);
+
+    final path = Path();
+    // Car body (top view - simplified)
+    // Car top
+    path.moveTo(6.0, 10.0);
+    path.lineTo(8.0, 6.0);
+    path.lineTo(16.0, 6.0);
+    path.lineTo(18.0, 10.0);
+    path.lineTo(18.0, 16.0);
+    path.lineTo(16.0, 18.0);
+    path.lineTo(8.0, 18.0);
+    path.lineTo(6.0, 16.0);
+    path.close();
+    
+    // Front wheel
+    path.addOval(Rect.fromCircle(center: Offset(9.0, 16.0), radius: 2.0));
+    // Rear wheel
+    path.addOval(Rect.fromCircle(center: Offset(15.0, 16.0), radius: 2.0));
+
+    canvas.drawPath(path, paint);
+    canvas.restore();
   }
 
   @override

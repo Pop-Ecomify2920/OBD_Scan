@@ -61,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
+    final navBarHeight = 95.0;
 
     return Scaffold(
       body: ErrorBoundary(
@@ -74,8 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: ErrorBoundary(
                       child: SizedBox(
                         width: screenWidth,
-                        height: screenHeight * 0.85,
+                        height: 891 - navBarHeight,
                         child: Stack(
+                          clipBehavior: Clip.none,
                           children: [
                             _buildBluetoothIcon(context, screenWidth),
                             _buildTitleDescription(screenWidth),
@@ -188,9 +190,13 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildGradientEllipse(double screenWidth) {
+    // Position at the top boundary of navigation bar (bottom of Stack)
+    // The ellipse height is 543.0, so position it so the visible part aligns with nav bar
+    // Using bottom: 0 means bottom of ellipse at bottom of Stack (top of nav bar)
+    // To show more of the ellipse above, use negative bottom value
     return Positioned(
       left: screenWidth / 2 - 259.5,
-      bottom: -270.0,
+      bottom: -275.0, // Align bottom of ellipse with top of navigation bar
       child: ErrorBoundary(
         child: SizedBox(
           width: 519.0,
@@ -216,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // Outer circle
             Positioned(
                 left: 76.0,
-                top: 165.0,
+                top: 185.0,
                 child: Container(
                   width: 260.0,
                   height: 260.0,
@@ -231,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // Middle circle
             Positioned(
               left: 50.0,
-              top: 139,
+              top: 159,
               child: Container(
                 width: 310.0,
                 height: 310.0,
@@ -247,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // Inner solid circle
             Positioned(
               left: 103.0,
-              top: 195.0,
+              top: 215.0,
               child: Container(
                 width: 200.0,
                 height: 200.0,
@@ -273,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildCarImage(double screenWidth) {
     return Positioned(
       left: screenWidth / 2 - 93,
-      top: 108.0,
+      top: 128.0,
       child: ErrorBoundary(
         child: Container(
           height: 350.0,
@@ -292,7 +298,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildPowerButton(double screenWidth) {
     return Positioned(
       left: screenWidth / 2 - 85,
-      top: 500.0,
+      top: 520.0,
       child: ErrorBoundary(
         child: GestureDetector(
           onTap: () {
@@ -342,7 +348,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildStatusIndicators(double screenWidth) {
     return Positioned(
       left: 20.0,
-      top: 650.0,
+      top: 670.0,
       child: ErrorBoundary(
         child: SizedBox(
           width: screenWidth - 40.0,

@@ -21,7 +21,7 @@ class BluetoothConnectScreen extends StatelessWidget {
             child: SingleChildScrollView(
               child: SizedBox(
                 width: screenWidth,
-                height: screenHeight,
+                height: 870,
                 child: Stack(
                   clipBehavior: Clip.none,
                   children: [

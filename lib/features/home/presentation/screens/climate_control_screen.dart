@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../../shared/widgets/app_background.dart';
@@ -15,23 +16,7 @@ class ClimateControlScreen extends StatefulWidget {
 }
 
 class _ClimateControlScreenState extends State<ClimateControlScreen> {
-  int _currentIndex = 0; // Default to home index
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // Determine current index based on route
-    _currentIndex = _getIndexFromRoute();
-  }
-
-  int _getIndexFromRoute() {
-    final location = GoRouterState.of(context).uri.path;
-    if (location == RouteNames.home) return 0;
-    if (location == RouteNames.safety) return 1;
-    if (location == RouteNames.homeDashboard) return 2;
-    if (location == RouteNames.settings) return 3;
-    return 0; // Default to home index (climate is part of home)
-  }
+  int _currentIndex = 0; // Home index (climate is part of home)
 
   void _onNavItemTapped(int index) {
     setState(() {
@@ -293,7 +278,7 @@ class _ClimateControlScreenState extends State<ClimateControlScreen> {
               // Heatings button (left) - from HTML: left-0 top-[78.5px]
               Positioned(
                 left: groupLeft - 23.0,
-                top: 78.5,
+                top: 81.5,
                 child: _buildHeatingsButton(),
               ),
               // Wind Speed control (center) - from HTML: left-[103px] top-0
@@ -316,27 +301,39 @@ class _ClimateControlScreenState extends State<ClimateControlScreen> {
   }
 
   Widget _buildHeatingsButton() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          width: 150.0,
-          height: 150.0,
-          child: CustomPaint(
-            painter: HeatingsIconPainter(),
+    return SizedBox(
+      width: 150.0,
+      height: 180.0, // Button height + text height + spacing
+      child: Stack(
+        children: [
+          // Button icon
+          Positioned(
+            top: 0.0,
+            left: 0.0,
+            child: SizedBox(
+              width: 150.0,
+              height: 150.0,
+              child: CustomPaint(
+                painter: HeatingsIconPainter(),
+              ),
+            ),
           ),
-        ),
-        SizedBox(height: 10.0),
-        Text(
-          "Heatings",
-          style: GoogleFonts.inter(
-            fontSize: 16.0,
-            fontWeight: FontWeight.w500,
-            color: Colors.white,
-            decoration: TextDecoration.none,
+          // Text label
+          Positioned(
+            top: 120.0, // 150 (button height) + 5 (spacing)
+            left: 30.0,
+            child: Text(
+              "Heatings",
+              style: GoogleFonts.inter(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                decoration: TextDecoration.none,
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -408,27 +405,39 @@ class _ClimateControlScreenState extends State<ClimateControlScreen> {
   }
 
   Widget _buildRefrigerationButton() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        SizedBox(
-          width: 150.0,
-          height: 150.0,
-          child: CustomPaint(
-            painter: RefrigerationIconPainter(),
+    return SizedBox(
+      width: 150.0,
+      height: 180.0, // Button height + text height + spacing
+      child: Stack(
+        children: [
+          // Button icon
+          Positioned(
+            top: 1.0,
+            left: 0.0,
+            child: SizedBox(
+              width: 150.0,
+              height: 150.0,
+              child: CustomPaint(
+                painter: RefrigerationIconPainter(),
+              ),
+            ),
           ),
-        ),
-        SizedBox(height: 10.0),
-        Text(
-          "Refrigeration",
-          style: GoogleFonts.inter(
-            fontSize: 16.0,
-            fontWeight: FontWeight.w500,
-            color: Colors.white,
-            decoration: TextDecoration.none,
+          // Text label
+          Positioned(
+            top: 125.0, // 150 (button height) + 5 (spacing)
+            left:15.0,
+            child: Text(
+              "Refrigeration",
+              style: GoogleFonts.inter(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                decoration: TextDecoration.none,
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -674,7 +683,7 @@ class WindSpeedDialPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-// Refrigeration Icon Painter (Snowflake icon)
+// Refrigeration Icon Painter (Snowflake icon - symmetrical)
 class RefrigerationIconPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -698,50 +707,55 @@ class RefrigerationIconPainter extends CustomPainter {
 
     canvas.drawCircle(svgCenter, 30.0, circlePaint);
 
-    // Snowflake icon paths (white)
+    // Snowflake icon (white, symmetrical)
     final iconPaint = Paint()
       ..color = Colors.white
-      ..style = PaintingStyle.fill;
-
-    // Vertical line
-    canvas.drawRect(
-      Rect.fromCenter(center: Offset(70.0, 70.0), width: 1.0, height: 18.0),
-      iconPaint,
-    );
-
-    // Top chevron (V shape pointing up)
-    final topChevron = Path();
-    topChevron.moveTo(66.2929, 58.2929);
-    topChevron.lineTo(70.0, 60.5858);
-    topChevron.lineTo(73.7071, 58.2929);
-    topChevron.lineTo(70.7071, 62.7071);
-    topChevron.close();
-    canvas.drawPath(topChevron, iconPaint);
-
-    // Bottom chevron (V shape pointing down)
-    final bottomChevron = Path();
-    bottomChevron.moveTo(66.2929, 81.7071);
-    bottomChevron.lineTo(70.0, 79.4142);
-    bottomChevron.lineTo(73.7071, 81.7071);
-    bottomChevron.lineTo(70.7071, 77.2929);
-    bottomChevron.close();
-    canvas.drawPath(bottomChevron, iconPaint);
-
-    // Diagonal lines (simplified)
-    final strokePaint = Paint()
-      ..color = Colors.white
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.5;
+      ..strokeWidth = 2.0
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
 
-    // Main diagonal lines
-    canvas.drawLine(Offset(62.2094, 65.4998), Offset(77.7913, 74.5002), strokePaint);
-    canvas.drawLine(Offset(77.7913, 65.4998), Offset(62.2094, 74.5002), strokePaint);
+    final center = svgCenter;
+    final mainBranchLength = 12.0; // Length of main branches
+    final sideBranchLength = 4.0; // Length of perpendicular side branches
+    final sideBranchOffset = 6.0; // Distance from center to side branch
 
-    // Decorative diagonal lines
-    canvas.drawLine(Offset(61.7157, 60.9342), Offset(64.0407, 65.7409), strokePaint);
-    canvas.drawLine(Offset(81.9909, 72.6409), Offset(78.9909, 77.8409), strokePaint);
-    canvas.drawLine(Offset(58.009, 72.6409), Offset(61.009, 77.8409), strokePaint);
-    canvas.drawLine(Offset(78.2839, 60.9342), Offset(75.959, 65.7409), strokePaint);
+    // Draw 6 symmetrical branches at 60-degree intervals
+    for (int i = 0; i < 6; i++) {
+      final angle = (i * 60.0) * (3.14159 / 180.0); // Convert to radians
+      final cosAngle = math.cos(angle);
+      final sinAngle = math.sin(angle);
+
+      // Main branch (from center outward)
+      final mainEnd = Offset(
+        center.dx + cosAngle * mainBranchLength,
+        center.dy + sinAngle * mainBranchLength,
+      );
+      canvas.drawLine(center, mainEnd, iconPaint);
+
+      // Perpendicular side branches (left and right of each main branch)
+      // Left side branch
+      final leftSideStart = Offset(
+        center.dx + cosAngle * sideBranchOffset,
+        center.dy + sinAngle * sideBranchOffset,
+      );
+      final leftSideEnd = Offset(
+        leftSideStart.dx + (-sinAngle) * sideBranchLength,
+        leftSideStart.dy + cosAngle * sideBranchLength,
+      );
+      canvas.drawLine(leftSideStart, leftSideEnd, iconPaint);
+
+      // Right side branch
+      final rightSideStart = Offset(
+        center.dx + cosAngle * sideBranchOffset,
+        center.dy + sinAngle * sideBranchOffset,
+      );
+      final rightSideEnd = Offset(
+        rightSideStart.dx - (-sinAngle) * sideBranchLength,
+        rightSideStart.dy - cosAngle * sideBranchLength,
+      );
+      canvas.drawLine(rightSideStart, rightSideEnd, iconPaint);
+    }
 
     canvas.restore();
   }
