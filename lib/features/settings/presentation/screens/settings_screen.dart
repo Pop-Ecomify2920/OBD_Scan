@@ -103,7 +103,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   Widget _buildHeader(BuildContext context, double screenWidth) {
     return Positioned(
       left: 20.0,
-      top: 14.0,
+      top: 18.0,
       right: 20.0,
       child: ErrorBoundary(
         child: Row(
@@ -113,6 +113,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             GestureDetector(
               onTap: () {
                 // Handle menu tap
+                  
               },
               child: SizedBox(
                 width: 32.0,

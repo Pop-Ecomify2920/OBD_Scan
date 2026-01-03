@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_strings.dart';
-import '../../../../core/constants/app_colors.dart';
 import '../../../../core/routes/route_names.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/utils/responsive.dart';
@@ -21,6 +20,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _rememberMe = false;
   bool _isLoading = false;
   bool _obscurePassword = true;
+  bool _hasValidated = false;
 
   @override
   void dispose() {
@@ -30,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _handleLogin() async {
+    setState(() => _hasValidated = true);
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
       
@@ -404,40 +405,67 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: EdgeInsets.symmetric(
               horizontal: Responsive.spacing(context, 20),
             ),
-            child: TextFormField(
-              controller: _emailController,
-              textAlignVertical: TextAlignVertical.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: Responsive.fontSize(context, 11),
-                color: const Color.fromRGBO(255, 255, 255, 1.0),
-              ),
-              keyboardType: TextInputType.emailAddress,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return AppStrings.emailRequired;
-                }
-                return null;
-              },
-              decoration: InputDecoration(
-                hintText: "example@gmail.com",
-                hintStyle: TextStyle(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: TextFormField(
+                controller: _emailController,
+                textAlignVertical: TextAlignVertical.center,
+                style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  fontSize: Responsive.fontSize(context, 10),
-                  color: const Color.fromARGB(221, 255, 254, 254),
+                  fontSize: Responsive.fontSize(context, 11),
+                  color: const Color.fromRGBO(255, 255, 255, 1.0),
+                  height: 1.3, // Ensure consistent line height
                 ),
-                filled: false,
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                errorBorder: InputBorder.none,
-                focusedErrorBorder: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: Responsive.spacing(context, 15),
+                keyboardType: TextInputType.emailAddress,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return AppStrings.emailRequired;
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                  hintText: "your@gmail.com",
+                  hintStyle: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: Responsive.fontSize(context, 11),
+                    color: const Color.fromARGB(221, 255, 254, 254),
+                    height: 1.5, // Ensure consistent line height
+                  ),
+                  filled: false,
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  focusedErrorBorder: InputBorder.none,
+                  errorText: null, // Prevent default error display
+                  errorStyle: const TextStyle(height: 0, fontSize: 0), // Hide error text completely
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: Responsive.size(context, 45) / 2.5- Responsive.fontSize(context, 11) / 2,
+                  ),
+                  isDense: false, // Allow proper centering
                 ),
-                // isDense: true,
               ),
             ),
+          ),
+          // Reserved space for error message (always present to prevent layout shift)
+          SizedBox(
+            height: Responsive.spacing(context, 20),
+            child: _hasValidated && _emailController.text.isEmpty
+                ? Padding(
+                    padding: EdgeInsets.only(
+                      top: Responsive.spacing(context, 5),
+                      left: Responsive.spacing(context, 5),
+                    ),
+                    child: Text(
+                      AppStrings.emailRequired,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: Responsive.fontSize(context, 11),
+                        color: const Color.fromRGBO(255, 0, 0, 1.0),
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
           ),
         ],
       ),
@@ -496,33 +524,40 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
-                  child: TextFormField(
-                    controller: _passwordController,
-                    obscureText: _obscurePassword,
-                    textAlignVertical: TextAlignVertical.center,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: Responsive.fontSize(context, 11),
-                      color: const Color.fromRGBO(255, 255, 255, 1.0),
-                    ),
-                    validator: Validators.validatePassword,
-                    decoration: InputDecoration(
-                      hintText: "******",
-                      hintStyle: TextStyle(
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: TextFormField(
+                      controller: _passwordController,
+                      obscureText: _obscurePassword,
+                      textAlignVertical: TextAlignVertical.center,
+                      style: TextStyle(
                         fontWeight: FontWeight.w400,
-                        fontSize: Responsive.fontSize(context, 10),
-                        color: const Color.fromARGB(190, 255, 255, 255),
+                        fontSize: Responsive.fontSize(context, 11),
+                        color: const Color.fromRGBO(255, 255, 255, 1.0),
+                        height: 1.0, // Ensure consistent line height
                       ),
-                      filled: false,
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      errorBorder: InputBorder.none,
-                      focusedErrorBorder: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(
-                        vertical: Responsive.spacing(context, 15),
+                      validator: Validators.validatePassword,
+                      decoration: InputDecoration(
+                        hintText: "******",
+                        hintStyle: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          fontSize: Responsive.fontSize(context, 10),
+                          color: const Color.fromARGB(190, 255, 255, 255),
+                          height: 1.0, // Ensure consistent line height
+                        ),
+                        filled: false,
+                        border: InputBorder.none,
+                        focusedBorder: InputBorder.none,
+                        enabledBorder: InputBorder.none,
+                        errorBorder: InputBorder.none,
+                        focusedErrorBorder: InputBorder.none,
+                        errorText: null, // Prevent default error display
+                        errorStyle: const TextStyle(height: 0, fontSize: 0), // Hide error text completely
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: Responsive.size(context, 45) / 2.3 - Responsive.fontSize(context, 11) / 2,
+                        ),
+                        isDense: false, // Allow proper centering
                       ),
-                      isDense: true,
                     ),
                   ),
                 ),
@@ -548,6 +583,42 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ],
             ),
+          ),
+          // Reserved space for error message (always present to prevent layout shift)
+          SizedBox(
+            height: Responsive.spacing(context, 20),
+            child: _hasValidated
+                ? (_passwordController.text.isEmpty
+                    ? Padding(
+                        padding: EdgeInsets.only(
+                          top: Responsive.spacing(context, 5),
+                        ),
+                        child: Text(
+                          AppStrings.passwordRequired,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: Responsive.fontSize(context, 11),
+                            color: const Color.fromRGBO(255, 0, 0, 1.0),
+                          ),
+                        ),
+                      )
+                    : (_passwordController.text.length < 8 && _passwordController.text.isNotEmpty
+                        ? Padding(
+                            padding: EdgeInsets.only(
+                              top: Responsive.spacing(context, 4),
+                              left: Responsive.spacing(context, 5),
+                            ),
+                            child: Text(
+                              AppStrings.passwordTooShort,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: Responsive.fontSize(context, 11),
+                                color: const Color.fromRGBO(255, 0, 0, 1.0),
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink()))
+                : const SizedBox.shrink(),
           ),
         ],
       ),

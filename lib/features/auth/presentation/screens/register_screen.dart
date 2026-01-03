@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/constants/app_colors.dart';
 import '../../../../core/routes/route_names.dart';
 import '../../../../core/utils/validators.dart';
 import '../../../../core/utils/responsive.dart';
@@ -20,6 +19,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _phoneController = TextEditingController();
   bool _isLoading = false;
   bool _agreeToTerms = false;
+  bool _hasValidated = false;
 
   @override
   void dispose() {
@@ -30,6 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   void _handleSignUp() async {
+    setState(() => _hasValidated = true);
     if (_formKey.currentState!.validate() && _agreeToTerms) {
       setState(() => _isLoading = true);
       
@@ -415,34 +416,78 @@ class _RegisterScreenState extends State<RegisterScreen> {
             padding: EdgeInsets.symmetric(
               horizontal: Responsive.spacing(context, 20),
             ),
-            child: TextFormField(
-              controller: _fullNameController,
-              textAlignVertical: TextAlignVertical.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: Responsive.fontSize(context, 11),
-                color: const Color.fromRGBO(255, 255, 255, 1.0),
-              ),
-              keyboardType: TextInputType.name,
-              validator: Validators.validateName,
-              decoration: InputDecoration(
-                hintText: "Abcxyz",
-                hintStyle: TextStyle(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: TextFormField(
+                controller: _fullNameController,
+                textAlignVertical: TextAlignVertical.center,
+                style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  fontSize: Responsive.fontSize(context, 10),
-                  color: const Color.fromARGB(221, 255, 254, 254),
+                  fontSize: Responsive.fontSize(context, 11),
+                  color: const Color.fromRGBO(255, 255, 255, 1.0),
+                  height: 1.0, // Ensure consistent line height
                 ),
-                filled: false,
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                errorBorder: InputBorder.none,
-                focusedErrorBorder: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: Responsive.spacing(context, 15),
+                keyboardType: TextInputType.name,
+                validator: Validators.validateName,
+                decoration: InputDecoration(
+                  hintText: "Abcxyz",
+                  hintStyle: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: Responsive.fontSize(context, 10),
+                    color: const Color.fromARGB(221, 255, 254, 254),
+                    height: 1.0, // Ensure consistent line height
+                  ),
+                  filled: false,
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  focusedErrorBorder: InputBorder.none,
+                  errorText: null, // Prevent default error display
+                  errorStyle: const TextStyle(height: 0, fontSize: 0), // Hide error text completely
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: Responsive.size(context, 46) / 2.2 - Responsive.fontSize(context, 11) / 2,
+                  ),
+                  isDense: false, // Allow proper centering
                 ),
               ),
             ),
+          ),
+          // Reserved space for error message (always present to prevent layout shift)
+          SizedBox(
+            height: Responsive.spacing(context, 20),
+            child: _hasValidated
+                ? (_fullNameController.text.isEmpty
+                    ? Padding(
+                        padding: EdgeInsets.only(
+                          top: Responsive.spacing(context, 4),
+                             left: Responsive.spacing(context, 5),
+                        ),
+                        child: Text(
+                          'Name is required',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: Responsive.fontSize(context, 11),
+                            color: const Color.fromRGBO(255, 0, 0, 1.0),
+                          ),
+                        ),
+                      )
+                    : (_fullNameController.text.length < 2 && _fullNameController.text.isNotEmpty
+                        ? Padding(
+                            padding: EdgeInsets.only(
+                              top: Responsive.spacing(context, 4),
+                            ),
+                            child: Text(
+                              'Name must be at least 2 characters',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: Responsive.fontSize(context, 11),
+                                color: const Color.fromRGBO(255, 0, 0, 1.0),
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink()))
+                : const SizedBox.shrink(),
           ),
         ],
       ),
@@ -491,34 +536,62 @@ class _RegisterScreenState extends State<RegisterScreen> {
             padding: EdgeInsets.symmetric(
               horizontal: Responsive.spacing(context, 20),
             ),
-            child: TextFormField(
-              controller: _emailController,
-              textAlignVertical: TextAlignVertical.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: Responsive.fontSize(context, 11),
-                color: const Color.fromRGBO(255, 255, 255, 1.0),
-              ),
-              keyboardType: TextInputType.emailAddress,
-              validator: Validators.validateEmail,
-              decoration: InputDecoration(
-                hintText: "example@gmail.com",
-                hintStyle: TextStyle(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: TextFormField(
+                controller: _emailController,
+                textAlignVertical: TextAlignVertical.center,
+                style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  fontSize: Responsive.fontSize(context, 10),
-                  color: const Color.fromARGB(221, 255, 254, 254),
+                  fontSize: Responsive.fontSize(context, 11),
+                  color: const Color.fromRGBO(255, 255, 255, 1.0),
+                  height: 1.0, // Ensure consistent line height
                 ),
-                filled: false,
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                errorBorder: InputBorder.none,
-                focusedErrorBorder: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: Responsive.spacing(context, 15),
+                keyboardType: TextInputType.emailAddress,
+                validator: Validators.validateEmail,
+                decoration: InputDecoration(
+                  hintText: "example@gmail.com",
+                  hintStyle: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: Responsive.fontSize(context, 10),
+                    color: const Color.fromARGB(221, 255, 254, 254),
+                    height: 1.0, // Ensure consistent line height
+                  ),
+                  filled: false,
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  focusedErrorBorder: InputBorder.none,
+                  errorText: null, // Prevent default error display
+                  errorStyle: const TextStyle(height: 0, fontSize: 0), // Hide error text completely
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: Responsive.size(context, 46) / 2.2 - Responsive.fontSize(context, 11) / 2,
+                  ),
+                  isDense: false, // Allow proper centering
                 ),
               ),
             ),
+          ),
+          // Reserved space for error message (always present to prevent layout shift)
+          SizedBox(
+            height: Responsive.spacing(context, 20),
+            child: _hasValidated && _emailController.text.isEmpty
+                ? Padding(
+                    padding: EdgeInsets.only(
+                      top: Responsive.spacing(context, 7),
+                         left: Responsive.spacing(context, 5),
+                    ),
+                    child: Text(
+                      'Email is required',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w400,
+                        fontSize: Responsive.fontSize(context, 11),
+                        color: const Color.fromRGBO(255, 0, 0, 1.0),
+                      ),
+                    ),
+                  )
+                : const SizedBox.shrink(),
           ),
         ],
       ),
@@ -567,34 +640,81 @@ class _RegisterScreenState extends State<RegisterScreen> {
             padding: EdgeInsets.symmetric(
               horizontal: Responsive.spacing(context, 20),
             ),
-            child: TextFormField(
-              controller: _phoneController,
-              textAlignVertical: TextAlignVertical.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w400,
-                fontSize: Responsive.fontSize(context, 11),
-                color: const Color.fromRGBO(255, 255, 255, 1.0),
-              ),
-              keyboardType: TextInputType.phone,
-              validator: Validators.validatePhone,
-              decoration: InputDecoration(
-                hintText: "+1234567890",
-                hintStyle: TextStyle(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: TextFormField(
+                controller: _phoneController,
+                textAlignVertical: TextAlignVertical.center,
+                style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  fontSize: Responsive.fontSize(context, 10),
-                  color: const Color.fromARGB(221, 255, 254, 254),
+                  fontSize: Responsive.fontSize(context, 11),
+                  color: const Color.fromRGBO(255, 255, 255, 1.0),
+                  height: 1.0, // Ensure consistent line height
                 ),
-                filled: false,
-                border: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                errorBorder: InputBorder.none,
-                focusedErrorBorder: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: Responsive.spacing(context, 15),
+                keyboardType: TextInputType.phone,
+                validator: Validators.validatePhone,
+                decoration: InputDecoration(
+                  hintText: "+1234567890",
+                  hintStyle: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: Responsive.fontSize(context, 10),
+                    color: const Color.fromARGB(221, 255, 254, 254),
+                    height: 1.0, // Ensure consistent line height
+                  ),
+                  filled: false,
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  enabledBorder: InputBorder.none,
+                  errorBorder: InputBorder.none,
+                  focusedErrorBorder: InputBorder.none,
+                  errorText: null, // Prevent default error display
+                  errorStyle: const TextStyle(height: 0, fontSize: 0), // Hide error text completely
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: Responsive.size(context, 46) / 2.3 - Responsive.fontSize(context, 11) / 2,
+                  ),
+                  isDense: false, // Allow proper centering
                 ),
               ),
             ),
+          ),
+          // Reserved space for error message (always present to prevent layout shift)
+          SizedBox(
+            height: Responsive.spacing(context, 20),
+            child: _hasValidated
+                ? (_phoneController.text.isEmpty
+                    ? Padding(
+                        padding: EdgeInsets.only(
+                          top: Responsive.spacing(context, 4),
+                                 left: Responsive.spacing(context, 5),
+
+                        ),
+                        child: Text(
+                          'Phone number is required',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: Responsive.fontSize(context, 11),
+                            color: const Color.fromRGBO(255, 0, 0, 1.0),
+                          ),
+                        ),
+                      )
+                    : (_phoneController.text.length < 10 && _phoneController.text.isNotEmpty
+                        ? Padding(
+                            padding: EdgeInsets.only(
+                              top: Responsive.spacing(context, 4),
+                                 left: Responsive.spacing(context, 5),
+
+                            ),
+                            child: Text(
+                              'Please enter a valid phone number',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: Responsive.fontSize(context, 11),
+                                color: const Color.fromRGBO(255, 0, 0, 1.0),
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink()))
+                : const SizedBox.shrink(),
           ),
         ],
       ),
